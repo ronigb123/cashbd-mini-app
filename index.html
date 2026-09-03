@@ -3,279 +3,368 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#12051f">
+<meta name="theme-color" content="#10051d">
 <title>CashBD</title>
 
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
 <style>
-*{box-sizing:border-box}
+*{
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
+}
+
 body{
   margin:0;
-  font-family:Arial,sans-serif;
-  background:#08020f;
+  font-family:Arial,"Noto Sans Bengali",sans-serif;
+  background:#0b0415;
   color:#fff;
 }
-button,input,select{font:inherit}
+
 .app{
+  width:100%;
   max-width:520px;
   margin:auto;
-  padding:14px;
+  padding:15px;
   padding-bottom:90px;
 }
 
-/* Header */
+/* HEADER */
 .header{
   display:flex;
   justify-content:space-between;
   align-items:center;
   margin-bottom:14px;
 }
+
 .user{
   display:flex;
   align-items:center;
   gap:10px;
 }
+
 .avatar{
-  width:58px;height:58px;
+  width:52px;
+  height:52px;
   border-radius:50%;
   display:flex;
   align-items:center;
   justify-content:center;
-  font-size:29px;
-  background:linear-gradient(135deg,#6f2cff,#d7a72d);
-  border:2px solid #d7a72d;
-}
-.hello{font-size:18px;font-weight:bold}
-.hello span{color:#ffd83d}
-.userid{font-size:12px;color:#bbb;margin-top:4px}
-.status{
-  display:inline-block;
-  margin-top:5px;
-  padding:4px 8px;
-  border-radius:15px;
-  background:#3b176d;
-  font-size:11px;
-}
-.icons{display:flex;gap:7px}
-.icon{
-  width:40px;height:40px;
-  border-radius:50%;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  background:#170921;
-  border:1px solid #6731a0;
+  font-size:27px;
+  background:linear-gradient(135deg,#7134db,#d8a72c);
+  border:2px solid #d8a72c;
 }
 
-/* Notice */
-.notice{
-  height:44px;
-  overflow:hidden;
-  white-space:nowrap;
+.hello{
+  font-size:17px;
+  font-weight:bold;
+}
+
+.hello span{
+  color:#ffd84a;
+}
+
+.userid{
+  color:#aaa;
+  font-size:11px;
+  margin-top:4px;
+}
+
+.status{
+  display:inline-block;
+  background:#35155b;
+  color:#ffd84a;
+  padding:4px 8px;
+  border-radius:12px;
+  font-size:10px;
+  margin-top:4px;
+}
+
+.header-icons{
+  display:flex;
+  gap:6px;
+}
+
+.circle{
+  width:38px;
+  height:38px;
+  border-radius:50%;
   display:flex;
   align-items:center;
-  border:1px solid #c99b28;
+  justify-content:center;
+  background:#190a27;
+  border:1px solid #63308e;
+}
+
+/* NOTICE */
+.notice{
+  height:42px;
+  display:flex;
+  align-items:center;
+  overflow:hidden;
+  white-space:nowrap;
+  border:1px solid #9b7021;
   border-radius:22px;
-  background:#160821;
+  background:#170821;
   margin-bottom:14px;
 }
+
 .notice span{
   display:inline-block;
   padding-left:100%;
-  animation:scroll 15s linear infinite;
+  animation:noticeMove 15s linear infinite;
   color:#eee;
-  font-size:13px;
+  font-size:12px;
 }
-@keyframes scroll{
+
+@keyframes noticeMove{
   from{transform:translateX(0)}
   to{transform:translateX(-100%)}
 }
 
-/* Balance */
+/* BALANCE */
 .balance{
   text-align:center;
-  padding:25px 18px;
+  padding:23px 15px;
   border-radius:22px;
-  background:linear-gradient(135deg,#2b0757,#100318);
-  border:1px solid #d1a32c;
-  box-shadow:0 0 20px rgba(112,42,210,.25);
-  margin-bottom:14px;
-}
-.balance-title{font-size:14px;color:#ddd}
-.balance-amount{
-  font-size:38px;
-  font-weight:bold;
-  margin:7px 0;
-}
-.withdrawable{
-  display:inline-block;
-  border:1px solid #d1a32c;
-  border-radius:20px;
-  padding:5px 13px;
-  color:#ffd83d;
-  font-size:12px;
+  background:linear-gradient(135deg,#6531a6,#bd8c25);
+  margin-bottom:15px;
+  box-shadow:0 7px 25px rgba(91,36,150,.25);
 }
 
-/* Cards */
+.balance-title{
+  font-size:15px;
+}
+
+.balance-money{
+  font-size:39px;
+  font-weight:bold;
+  margin:3px 0 8px;
+}
+
+.balance-label{
+  display:inline-block;
+  padding:5px 13px;
+  border-radius:20px;
+  background:rgba(0,0,0,.25);
+  font-size:11px;
+}
+
+/* CARDS */
 .card{
-  background:#160821;
-  border:1px solid #542477;
-  border-radius:19px;
+  background:#1b0d2b;
+  border:1px solid #4b2470;
+  border-radius:20px;
   padding:17px;
   margin-bottom:14px;
 }
+
 .card h2{
+  margin:0 0 10px;
   font-size:19px;
-  margin:0 0 12px;
 }
+
 .info{
-  color:#ddd;
+  color:#d0cbd5;
   font-size:13px;
-  line-height:1.7;
-}
-
-/* Activation */
-.activation{
-  border:1px solid #d1a32c;
-  background:linear-gradient(135deg,#261038,#12051b);
-}
-.fee{
-  font-size:24px;
-  color:#ffd83d;
-  font-weight:bold;
-  margin:7px 0;
-}
-.paybox{
-  background:#0d0415;
-  border-radius:13px;
-  padding:12px;
-  margin:10px 0;
   line-height:1.8;
-  font-size:13px;
 }
-.gold{color:#ffd83d;font-weight:bold}
 
-/* Buttons */
-.btn{
-  width:100%;
-  border:0;
-  border-radius:13px;
-  padding:13px;
-  margin-top:9px;
+/* ACTIVATION */
+.activation{
+  border-color:#9f7625;
+  background:linear-gradient(135deg,#25103b,#15091e);
+}
+
+.fee{
+  color:#ffd84a;
+  font-size:27px;
   font-weight:bold;
-  color:#fff;
-  background:linear-gradient(135deg,#6d31d8,#4c179c);
-}
-.btn.gold-btn{
-  color:#160900;
-  background:linear-gradient(135deg,#ffe066,#d59a17);
-}
-.btn.red{
-  background:#741c42;
+  margin:5px 0 10px;
 }
 
-/* Tasks */
+.payment-box{
+  background:#0e0616;
+  border-radius:14px;
+  padding:12px;
+  font-size:13px;
+  line-height:1.9;
+  margin:10px 0;
+}
+
+.gold{
+  color:#ffd84a;
+  font-weight:bold;
+}
+
+/* TASK GRID */
 .grid{
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:9px;
+  gap:10px;
 }
-.task{
-  min-height:112px;
-  text-align:center;
-  padding:14px 7px;
-  border-radius:17px;
-  background:#14071d;
-  border:1px solid #653095;
-}
-.task-icon{font-size:31px}
-.task-title{font-size:14px;font-weight:bold;margin-top:5px}
-.task-sub{font-size:10px;color:#aaa;margin-top:4px}
 
-/* Pages */
-.page{display:none}
-.page.active{display:block}
-.back{
-  background:none;
-  border:0;
-  color:#ffd83d;
-  padding:5px 0 13px;
+.task{
+  min-height:115px;
+  border-radius:18px;
+  background:#170923;
+  border:1px solid #57287d;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:10px;
+}
+
+.task:active{
+  transform:scale(.97);
+}
+
+.task-icon{
+  font-size:30px;
+  margin-bottom:7px;
+}
+
+.task-title{
+  font-size:14px;
   font-weight:bold;
 }
 
-/* Forms */
-label{
-  display:block;
-  font-size:13px;
-  color:#ccc;
-  margin:12px 0 6px;
-}
-input,select{
-  width:100%;
-  padding:13px;
-  border-radius:12px;
-  border:1px solid #5a2a7c;
-  outline:none;
-  background:#0d0415;
-  color:#fff;
-}
-input:focus,select:focus{border-color:#d3a62e}
-.error{
-  color:#ff738f;
-  font-size:12px;
+.task-sub{
+  font-size:10px;
+  color:#aaa;
   margin-top:5px;
 }
-.success{
-  background:#12351f;
-  border:1px solid #3c9b58;
-  color:#9ff0ae;
-  padding:11px;
-  border-radius:12px;
-  margin-top:10px;
+
+/* PAGES */
+.page{
   display:none;
 }
 
-/* Referral */
-.ref-code{
-  text-align:center;
-  background:#0c0313;
-  border:1px dashed #d0a32c;
-  padding:15px;
-  border-radius:14px;
-  margin:10px 0;
-}
-.ref-code strong{
-  color:#ffd83d;
-  font-size:21px;
+.page.active{
+  display:block;
 }
 
-/* Bottom nav */
-.bottom{
+.back{
+  border:0;
+  background:none;
+  color:#ffd84a;
+  font-weight:bold;
+  padding:5px 0 13px;
+}
+
+/* INPUT */
+label{
+  display:block;
+  color:#ccc;
+  font-size:13px;
+  margin:12px 0 6px;
+}
+
+input,select{
+  width:100%;
+  border:1px solid #5c2d7e;
+  border-radius:12px;
+  background:#0d0515;
+  color:#fff;
+  padding:13px;
+  outline:none;
+}
+
+input:focus,
+select:focus{
+  border-color:#d2a32e;
+}
+
+.error{
+  color:#ff7891;
+  font-size:11px;
+  margin-top:5px;
+}
+
+.success{
+  display:none;
+  background:#10351e;
+  border:1px solid #3d9955;
+  color:#9bf0aa;
+  padding:11px;
+  border-radius:12px;
+  margin-top:10px;
+  font-size:12px;
+}
+
+/* BUTTON */
+.btn{
+  width:100%;
+  border:0;
+  border-radius:14px;
+  padding:14px;
+  margin-top:10px;
+  color:#fff;
+  font-size:15px;
+  font-weight:bold;
+  background:linear-gradient(135deg,#7436df,#5420a6);
+}
+
+.btn:active{
+  transform:scale(.98);
+}
+
+.gold-btn{
+  color:#160b00;
+  background:linear-gradient(135deg,#ffe36a,#d59b1e);
+}
+
+/* REFERRAL */
+.ref-box{
+  text-align:center;
+  background:#0d0515;
+  border:1px dashed #d1a32e;
+  border-radius:15px;
+  padding:15px;
+  margin-top:12px;
+}
+
+.ref-code{
+  color:#ffd84a;
+  font-size:21px;
+  font-weight:bold;
+  margin-top:6px;
+}
+
+/* BOTTOM NAV */
+.bottom-nav{
   position:fixed;
-  left:50%;
+  z-index:50;
   bottom:8px;
+  left:50%;
   transform:translateX(-50%);
-  width:min(500px,calc(100% - 20px));
+  width:min(500px,calc(100% - 16px));
   display:grid;
   grid-template-columns:repeat(5,1fr);
-  padding:7px 3px;
+  background:rgba(17,7,27,.98);
+  border:1px solid #54277a;
   border-radius:20px;
-  background:rgba(12,3,20,.97);
-  border:1px solid #5e2c80;
-  z-index:20;
+  padding:7px 3px;
 }
+
 .nav{
   text-align:center;
+  color:#999;
   font-size:10px;
-  color:#aaa;
-  padding:4px 0;
+  padding:3px;
 }
-.nav-icon{display:block;font-size:20px}
-.nav.active{color:#ffd83d}
 
-.hidden{display:none}
-.small{font-size:11px;color:#aaa}
+.nav-icon{
+  display:block;
+  font-size:20px;
+  margin-bottom:2px;
+}
+
+.nav.active{
+  color:#ffd84a;
+}
 </style>
 </head>
 
@@ -287,62 +376,114 @@ input:focus,select:focus{border-color:#d3a62e}
 <section id="home" class="page active">
 
   <div class="header">
+
     <div class="user">
+
       <div class="avatar">👨‍💼</div>
+
       <div>
-        <div class="hello">Hello, <span>Sumon Mia</span> 👋</div>
-        <div class="userid">User ID: Telegram User</div>
-        <div class="status">🔐 Account Inactive</div>
+        <div class="hello">
+          👋 Hello, <span id="userName">Sumon Mia</span>
+        </div>
+
+        <div class="userid">
+          User ID: <span id="userId">Telegram User</span>
+        </div>
+
+        <div class="status">
+          🔐 Account Inactive
+        </div>
       </div>
+
     </div>
 
-    <div class="icons">
-      <div class="icon">🔔</div>
-      <div class="icon" onclick="openPage('support')">🎧</div>
+    <div class="header-icons">
+      <div class="circle">🔔</div>
+      <div class="circle" onclick="openPage('support')">🎧</div>
     </div>
+
   </div>
+
 
   <div class="notice">
     <span>
-      📢 CashBD Notice: যেকোনো সমস্যা বা সাহায্যের জন্য WhatsApp-এ যোগাযোগ করুন 📱 01873570387
+      📢 CashBD Notice: Account activation fee ৳110 • Send Money only • Mobile Recharge accepted নয় • Successful Referral ৳30
     </span>
   </div>
 
+
   <div class="balance">
-    <div class="balance-title">💰 আপনার ব্যালেন্স</div>
-    <div class="balance-amount">৳0.00</div>
-    <div class="withdrawable">Withdrawable Balance</div>
+
+    <div class="balance-title">
+      💰 আপনার ব্যালেন্স
+    </div>
+
+    <div class="balance-money">
+      ৳0.00
+    </div>
+
+    <div class="balance-label">
+      Withdrawable Balance
+    </div>
+
   </div>
+
 
   <div class="card">
+
     <h2>👋 Account Information</h2>
+
     <div class="info">
-      🆔 User ID: Telegram User<br>
-      🔐 Account Status: Inactive<br>
-      💰 Current Balance: ৳0.00
+      🆔 User ID:
+      <span id="userId2">Telegram User</span>
+      <br>
+
+      🔐 Account Status:
+      <span class="gold">Inactive</span>
+      <br>
+
+      💰 Balance:
+      <span class="gold">৳0.00</span>
     </div>
+
   </div>
 
+
   <div class="card activation">
+
     <h2>🔐 Account Activation</h2>
 
     <div class="info">
-      সকল ফিচার ব্যবহার করতে আপনার অ্যাকাউন্ট অ্যাক্টিভেট করুন।
+      সকল earning features ব্যবহার করার জন্য account activation প্রয়োজন।
     </div>
 
-    <div class="fee">৳110</div>
+    <div class="fee">
+      ৳110
+    </div>
 
-    <div class="paybox">
-      <div>📱 <span class="gold">bKash:</span> 01935654366</div>
-      <div>📱 <span class="gold">Nagad:</span> 01873570387</div>
-      <div>✅ Send Money গ্রহণযোগ্য</div>
-      <div>❌ Mobile Recharge গ্রহণযোগ্য নয়</div>
+    <div class="payment-box">
+
+      📱 bKash:
+      <span class="gold">01935654366</span>
+      <br>
+
+      📱 Nagad:
+      <span class="gold">01873570387</span>
+      <br>
+
+      ✅ Send Money গ্রহণযোগ্য
+      <br>
+
+      ❌ Mobile Recharge গ্রহণযোগ্য নয়
+
     </div>
 
     <button class="btn gold-btn" onclick="openPage('activation')">
-      🔓 Submit Activation Request
+      🔓 Account Activation
     </button>
+
   </div>
+
 
   <div class="grid">
 
@@ -360,8 +501,8 @@ input:focus,select:focus{border-color:#d3a62e}
 
     <div class="task" onclick="openPage('website')">
       <div class="task-icon">🌐</div>
-      <div class="task-title">Visit Website</div>
-      <div class="task-sub">Website visit করে আয়</div>
+      <div class="task-title">Website Visit</div>
+      <div class="task-sub">Visit করে আয়</div>
     </div>
 
     <div class="task" onclick="openPage('video')">
@@ -372,8 +513,8 @@ input:focus,select:focus{border-color:#d3a62e}
 
     <div class="task" onclick="openPage('apps')">
       <div class="task-icon">📲</div>
-      <div class="task-title">Download Apps</div>
-      <div class="task-sub">App download করে আয়</div>
+      <div class="task-title">App Download</div>
+      <div class="task-sub">Download করে আয়</div>
     </div>
 
     <div class="task" onclick="openPage('refer')">
@@ -385,13 +526,13 @@ input:focus,select:focus{border-color:#d3a62e}
     <div class="task" onclick="openPage('leaderboard')">
       <div class="task-icon">🏆</div>
       <div class="task-title">Leaderboard</div>
-      <div class="task-sub">সেরা আয়কারীদের তালিকা</div>
+      <div class="task-sub">Top users</div>
     </div>
 
     <div class="task" onclick="openPage('support')">
       <div class="task-icon">🎧</div>
       <div class="task-title">Support</div>
-      <div class="task-sub">সাহায্যের জন্য যোগাযোগ</div>
+      <div class="task-sub">Help Center</div>
     </div>
 
   </div>
@@ -402,53 +543,74 @@ input:focus,select:focus{border-color:#d3a62e}
 <!-- ================= ACTIVATION ================= -->
 <section id="activation" class="page">
 
-  <button class="back" onclick="openPage('home')">← Home</button>
+  <button class="back" onclick="openPage('home')">
+    ← Home
+  </button>
 
   <div class="card activation">
+
     <h2>🔐 Account Activation</h2>
 
     <div class="info">
-      Activation Fee
+      আপনার account activate করতে ৳110 Send Money করুন।
     </div>
 
     <div class="fee">৳110</div>
 
-    <div class="paybox">
-      <div>📱 bKash: <span class="gold">01935654366</span></div>
-      <div>📱 Nagad: <span class="gold">01873570387</span></div>
+    <div class="payment-box">
+
+      📱 bKash:
+      <span class="gold">01935654366</span>
       <br>
-      ✅ Send Money গ্রহণযোগ্য<br>
+
+      📱 Nagad:
+      <span class="gold">01873570387</span>
+      <br><br>
+
+      ✅ Send Money গ্রহণযোগ্য
+      <br>
+
       ❌ Mobile Recharge গ্রহণযোগ্য নয়
+
     </div>
+
 
     <form id="activationForm">
 
       <label>Payment Method</label>
+
       <select id="activationMethod">
         <option value="">Select Method</option>
         <option value="bKash">bKash</option>
         <option value="Nagad">Nagad</option>
       </select>
+
       <div id="activationMethodError" class="error"></div>
 
+
       <label>Transaction ID</label>
+
       <input
         id="transactionId"
         type="text"
-        placeholder="আপনার Transaction ID লিখুন"
         maxlength="50"
+        placeholder="Transaction ID লিখুন"
       >
+
       <div id="transactionError" class="error"></div>
 
+
       <button class="btn gold-btn" type="submit">
-        📤 Send Activation Request
+        📤 Submit Activation Request
       </button>
 
+
       <div id="activationSuccess" class="success">
-        ✅ Request প্রস্তুত হয়েছে। Admin verification-এর পর account active হবে।
+        ✅ Request validation সফল হয়েছে। Admin verification-এর পর account active হবে।
       </div>
 
     </form>
+
   </div>
 
 </section>
@@ -457,20 +619,29 @@ input:focus,select:focus{border-color:#d3a62e}
 <!-- ================= REFERRAL ================= -->
 <section id="refer" class="page">
 
-  <button class="back" onclick="openPage('home')">← Home</button>
+  <button class="back" onclick="openPage('home')">
+    ← Home
+  </button>
 
   <div class="card">
+
     <h2>👥 Refer & Earn</h2>
 
     <div class="info">
-      প্রতি <span class="gold">সফল রেফার</span>-এর জন্য আপনি পাবেন
+      আপনার মাধ্যমে কোনো user সফলভাবে join/complete করলে
+      <span class="gold">৳30</span> referral bonus প্রযোজ্য।
     </div>
 
-    <div class="fee">৳30</div>
+    <div class="ref-box">
 
-    <div class="ref-code">
-      <div class="small">আপনার Referral Code</div>
-      <strong id="refCode">CASHBD-USER</strong>
+      <div class="small">
+        Your Referral Code
+      </div>
+
+      <div class="ref-code" id="refCode">
+        CASHBD-USER
+      </div>
+
     </div>
 
     <button class="btn gold-btn" onclick="copyReferral()">
@@ -482,15 +653,23 @@ input:focus,select:focus{border-color:#d3a62e}
     </button>
 
     <div id="refSuccess" class="success"></div>
+
   </div>
 
+
   <div class="card">
+
     <h2>📊 Referral Statistics</h2>
 
     <div class="info">
-      👥 Successful Referrals: <span class="gold">0</span><br>
-      💰 Referral Earnings: <span class="gold">৳0.00</span>
+      👥 Successful Referrals:
+      <span class="gold">0</span>
+      <br>
+
+      💰 Referral Earnings:
+      <span class="gold">৳0.00</span>
     </div>
+
   </div>
 
 </section>
@@ -499,310 +678,479 @@ input:focus,select:focus{border-color:#d3a62e}
 <!-- ================= WITHDRAW ================= -->
 <section id="withdraw" class="page">
 
-  <button class="back" onclick="openPage('home')">← Home</button>
+  <button class="back" onclick="openPage('home')">
+    ← Home
+  </button>
 
   <div class="card">
-    <h2>💸 Withdraw Money</h2>
+
+    <h2>💸 Withdraw</h2>
 
     <div class="info">
-      সর্বনিম্ন উত্তোলন: <span class="gold">৳100</span><br>
-      সর্বোচ্চ উত্তোলন: <span class="gold">৳5000</span><br>
-      বর্তমান Balance: <span class="gold">৳0.00</span>
+
+      💰 Current Balance:
+      <span class="gold">৳0.00</span>
+      <br>
+
+      Minimum Withdrawal:
+      <span class="gold">৳100</span>
+      <br>
+
+      Maximum Withdrawal:
+      <span class="gold">৳5000</span>
+
     </div>
+
 
     <form id="withdrawForm">
 
       <label>Payment Method</label>
+
       <select id="withdrawMethod">
         <option value="">Select Method</option>
         <option value="bKash">bKash</option>
         <option value="Nagad">Nagad</option>
       </select>
+
       <div id="withdrawMethodError" class="error"></div>
 
-      <label>Account Number</label>
+
+      <label>Mobile Number</label>
+
       <input
         id="withdrawNumber"
         type="tel"
-        placeholder="01XXXXXXXXX"
         maxlength="11"
+        placeholder="01XXXXXXXXX"
       >
+
       <div id="withdrawNumberError" class="error"></div>
 
+
       <label>Withdrawal Amount</label>
+
       <input
         id="withdrawAmount"
         type="number"
         min="100"
         max="5000"
-        step="1"
         placeholder="৳100 - ৳5000"
       >
+
       <div id="withdrawAmountError" class="error"></div>
+
 
       <button class="btn gold-btn" type="submit">
         💸 Submit Withdrawal Request
       </button>
 
+
       <div id="withdrawSuccess" class="success">
-        ✅ Withdrawal request validation সফল হয়েছে।
+        ✅ তথ্যগুলো সঠিক। Withdrawal request backend verification-এর জন্য প্রস্তুত।
       </div>
 
     </form>
+
   </div>
 
 </section>
 
 
-<!-- ================= SIMPLE PAGES ================= -->
+<!-- ================= EARN ================= -->
 <section id="earn" class="page">
-  <button class="back" onclick="openPage('home')">← Home</button>
+
+  <button class="back" onclick="openPage('home')">
+    ← Home
+  </button>
+
   <div class="card">
+
     <h2>🎯 Earn Tasks</h2>
+
     <div class="info">
-      এখানে available earning tasks দেখানো হবে।<br><br>
+      এখানে admin-approved earning tasks দেখানো হবে।
+      <br><br>
       🔐 Account activation প্রয়োজন হতে পারে।
     </div>
+
   </div>
+
 </section>
 
+
+<!-- ================= WEBSITE ================= -->
 <section id="website" class="page">
-  <button class="back" onclick="openPage('home')">← Home</button>
-  <div class="card">
-    <h2>🌐 Visit Website</h2>
-    <div class="info">Admin-approved website tasks এখানে আসবে।</div>
-  </div>
-</section>
 
-<section id="video" class="page">
-  <button class="back" onclick="openPage('home')">← Home</button>
-  <div class="card">
-    <h2>🎬 Watch Video</h2>
-    <div class="info">Admin-approved video tasks এখানে আসবে।</div>
-  </div>
-</section>
+  <button class="back" onclick="openPage('home')">
+    ← Home
+  </button>
 
-<section id="apps" class="page">
-  <button class="back" onclick="openPage('home')">← Home</button>
   <div class="card">
-    <h2>📲 App Download & Earn</h2>
-    <div class="info">Admin-approved app tasks এখানে আসবে।</div>
-  </div>
-</section>
 
-<section id="leaderboard" class="page">
-  <button class="back" onclick="openPage('home')">← Home</button>
-  <div class="card">
-    <h2>🏆 Leaderboard</h2>
-    <div class="info">Real leaderboard backend/database যুক্ত করার পর এখানে দেখাবে।</div>
-  </div>
-</section>
+    <h2>🌐 Website Visit</h2>
 
-<section id="support" class="page">
-  <button class="back" onclick="openPage('home')">← Home</button>
-  <div class="card">
-    <h2>🎧 Support</h2>
     <div class="info">
-      যেকোনো সমস্যা বা সাহায্যের জন্য WhatsApp:<br>
+      Admin-approved website tasks এখানে থাকবে।
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ================= VIDEO ================= -->
+<section id="video" class="page">
+
+  <button class="back" onclick="openPage('home')">
+    ← Home
+  </button>
+
+  <div class="card">
+
+    <h2>🎬 Watch Video</h2>
+
+    <div class="info">
+      Admin-approved video tasks এখানে থাকবে।
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ================= APPS ================= -->
+<section id="apps" class="page">
+
+  <button class="back" onclick="openPage('home')">
+    ← Home
+  </button>
+
+  <div class="card">
+
+    <h2>📲 App Download & Earn</h2>
+
+    <div class="info">
+      Admin-approved app tasks এখানে থাকবে।
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ================= LEADERBOARD ================= -->
+<section id="leaderboard" class="page">
+
+  <button class="back" onclick="openPage('home')">
+    ← Home
+  </button>
+
+  <div class="card">
+
+    <h2>🏆 Leaderboard</h2>
+
+    <div class="info">
+      Real leaderboard চালু করতে backend/database প্রয়োজন।
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ================= SUPPORT ================= -->
+<section id="support" class="page">
+
+  <button class="back" onclick="openPage('home')">
+    ← Home
+  </button>
+
+  <div class="card">
+
+    <h2>🎧 Support System</h2>
+
+    <div class="info">
+      যেকোনো সমস্যা বা সাহায্যের জন্য যোগাযোগ করুন।
+      <br><br>
+      📱 WhatsApp:
       <span class="gold">01873570387</span>
     </div>
+
   </div>
+
 </section>
 
 </div>
 
 
-<!-- Bottom Navigation -->
-<div class="bottom">
+<!-- ================= BOTTOM NAV ================= -->
+<div class="bottom-nav">
 
   <div class="nav active" onclick="openPage('home')">
-    <span class="nav-icon">🏠</span>Home
+    <span class="nav-icon">🏠</span>
+    Home
   </div>
 
   <div class="nav" onclick="openPage('earn')">
-    <span class="nav-icon">💰</span>Earn
+    <span class="nav-icon">🎯</span>
+    Earn
   </div>
 
   <div class="nav" onclick="openPage('withdraw')">
-    <span class="nav-icon">💸</span>Wallet
+    <span class="nav-icon">💸</span>
+    Wallet
   </div>
 
   <div class="nav" onclick="openPage('refer')">
-    <span class="nav-icon">👥</span>Refer
+    <span class="nav-icon">👥</span>
+    Refer
   </div>
 
   <div class="nav" onclick="openPage('support')">
-    <span class="nav-icon">🎧</span>Support
+    <span class="nav-icon">🎧</span>
+    Support
   </div>
 
 </div>
 
 
 <script>
-const tg = window.Telegram.WebApp;
+
+/* TELEGRAM */
+const tg = window.Telegram && window.Telegram.WebApp;
 
 if(tg){
   tg.ready();
   tg.expand();
-}
 
-/* Page navigation */
-function openPage(page){
+  const user = tg.initDataUnsafe && tg.initDataUnsafe.user;
 
-  document.querySelectorAll('.page').forEach(function(p){
-    p.classList.remove('active');
-  });
+  if(user){
 
-  const target=document.getElementById(page);
+    const fullName =
+      ((user.first_name || "") + " " + (user.last_name || "")).trim();
 
-  if(target){
-    target.classList.add('active');
-    window.scrollTo(0,0);
-  }
+    if(fullName){
+      document.getElementById("userName").textContent = fullName;
+    }
 
-  document.querySelectorAll('.nav').forEach(function(n){
-    n.classList.remove('active');
-  });
+    if(user.id){
 
-  if(page==='home'){
-    document.querySelectorAll('.nav')[0].classList.add('active');
-  }
+      document.getElementById("userId").textContent = user.id;
+      document.getElementById("userId2").textContent = user.id;
 
-  if(page==='earn'){
-    document.querySelectorAll('.nav')[1].classList.add('active');
-  }
+      document.getElementById("refCode").textContent =
+        "CASHBD-" + user.id;
 
-  if(page==='withdraw'){
-    document.querySelectorAll('.nav')[2].classList.add('active');
-  }
-
-  if(page==='refer'){
-    document.querySelectorAll('.nav')[3].classList.add('active');
-  }
-
-  if(page==='support'){
-    document.querySelectorAll('.nav')[4].classList.add('active');
-  }
-}
-
-
-/* Activation validation */
-document.getElementById('activationForm').addEventListener('submit',function(e){
-
-  e.preventDefault();
-
-  const method=document.getElementById('activationMethod').value.trim();
-  const tx=document.getElementById('transactionId').value.trim();
-
-  document.getElementById('activationMethodError').textContent='';
-  document.getElementById('transactionError').textContent='';
-  document.getElementById('activationSuccess').style.display='none';
-
-  let valid=true;
-
-  if(!method){
-    document.getElementById('activationMethodError').textContent=
-      'Payment method নির্বাচন করুন।';
-    valid=false;
-  }
-
-  if(tx.length<5){
-    document.getElementById('transactionError').textContent=
-      'সঠিক Transaction ID লিখুন।';
-    valid=false;
-  }
-
-  if(valid){
-    document.getElementById('activationSuccess').style.display='block';
-  }
-
-});
-
-
-/* Withdrawal validation */
-document.getElementById('withdrawForm').addEventListener('submit',function(e){
-
-  e.preventDefault();
-
-  const method=document.getElementById('withdrawMethod').value.trim();
-  const number=document.getElementById('withdrawNumber').value.trim();
-  const amount=Number(document.getElementById('withdrawAmount').value);
-
-  document.getElementById('withdrawMethodError').textContent='';
-  document.getElementById('withdrawNumberError').textContent='';
-  document.getElementById('withdrawAmountError').textContent='';
-  document.getElementById('withdrawSuccess').style.display='none';
-
-  let valid=true;
-
-  if(!method){
-    document.getElementById('withdrawMethodError').textContent=
-      'Payment method নির্বাচন করুন।';
-    valid=false;
-  }
-
-  if(!/^01[0-9]{9}$/.test(number)){
-    document.getElementById('withdrawNumberError').textContent=
-      'সঠিক ১১ সংখ্যার মোবাইল নম্বর দিন।';
-    valid=false;
-  }
-
-  if(!amount){
-    document.getElementById('withdrawAmountError').textContent=
-      'Withdrawal amount দিন।';
-    valid=false;
-  }else if(amount<100 || amount>5000){
-    document.getElementById('withdrawAmountError').textContent=
-      'Withdrawal ৳100 থেকে ৳5000-এর মধ্যে হতে হবে।';
-    valid=false;
-  }
-
-  if(valid){
-    document.getElementById('withdrawSuccess').style.display='block';
-  }
-
-});
-
-
-/* Referral */
-function copyReferral(){
-
-  const code=document.getElementById('refCode').textContent;
-
-  if(navigator.clipboard){
-    navigator.clipboard.writeText(code);
-  }
-
-  const box=document.getElementById('refSuccess');
-  box.textContent='✅ Referral code copied: '+code;
-  box.style.display='block';
-}
-
-function shareReferral(){
-
-  const code=document.getElementById('refCode').textContent;
-
-  const text=
-    'CashBD-তে যোগ দিন। আমার Referral Code: '+code;
-
-  if(tg && tg.openTelegramLink){
-
-    tg.openTelegramLink(
-      'https://t.me/share/url?url=&text='+
-      encodeURIComponent(text)
-    );
-
-  }else{
-
-    if(navigator.share){
-      navigator.share({text:text});
-    }else{
-      copyReferral();
     }
 
   }
+}
+
+
+/* PAGE NAVIGATION */
+function openPage(page){
+
+  document.querySelectorAll(".page").forEach(function(item){
+    item.classList.remove("active");
+  });
+
+  const selected=document.getElementById(page);
+
+  if(selected){
+    selected.classList.add("active");
+  }
+
+  document.querySelectorAll(".nav").forEach(function(item){
+    item.classList.remove("active");
+  });
+
+  if(page==="home"){
+    document.querySelectorAll(".nav")[0].classList.add("active");
+  }
+
+  if(page==="earn"){
+    document.querySelectorAll(".nav")[1].classList.add("active");
+  }
+
+  if(page==="withdraw"){
+    document.querySelectorAll(".nav")[2].classList.add("active");
+  }
+
+  if(page==="refer"){
+    document.querySelectorAll(".nav")[3].classList.add("active");
+  }
+
+  if(page==="support"){
+    document.querySelectorAll(".nav")[4].classList.add("active");
+  }
+
+  window.scrollTo(0,0);
+}
+
+
+/* ACTIVATION VALIDATION */
+document.getElementById("activationForm")
+.addEventListener("submit",function(e){
+
+  e.preventDefault();
+
+  const method=
+    document.getElementById("activationMethod").value.trim();
+
+  const tx=
+    document.getElementById("transactionId").value.trim();
+
+  document.getElementById("activationMethodError").textContent="";
+  document.getElementById("transactionError").textContent="";
+  document.getElementById("activationSuccess").style.display="none";
+
+  let valid=true;
+
+  if(!method){
+
+    document.getElementById("activationMethodError").textContent=
+      "Payment method নির্বাচন করুন।";
+
+    valid=false;
+  }
+
+  if(tx.length < 5){
+
+    document.getElementById("transactionError").textContent=
+      "সঠিক Transaction ID লিখুন।";
+
+    valid=false;
+  }
+
+  if(valid){
+
+    document.getElementById("activationSuccess").style.display="block";
+
+  }
+
+});
+
+
+/* WITHDRAW VALIDATION */
+document.getElementById("withdrawForm")
+.addEventListener("submit",function(e){
+
+  e.preventDefault();
+
+  const method=
+    document.getElementById("withdrawMethod").value.trim();
+
+  const number=
+    document.getElementById("withdrawNumber").value.trim();
+
+  const amount=
+    Number(document.getElementById("withdrawAmount").value);
+
+  document.getElementById("withdrawMethodError").textContent="";
+  document.getElementById("withdrawNumberError").textContent="";
+  document.getElementById("withdrawAmountError").textContent="";
+  document.getElementById("withdrawSuccess").style.display="none";
+
+  let valid=true;
+
+
+  if(!method){
+
+    document.getElementById("withdrawMethodError").textContent=
+      "Payment method নির্বাচন করুন।";
+
+    valid=false;
+  }
+
+
+  if(!/^01[0-9]{9}$/.test(number)){
+
+    document.getElementById("withdrawNumberError").textContent=
+      "সঠিক ১১ সংখ্যার বাংলাদেশি মোবাইল নম্বর দিন।";
+
+    valid=false;
+  }
+
+
+  if(!amount){
+
+    document.getElementById("withdrawAmountError").textContent=
+      "Withdrawal amount লিখুন।";
+
+    valid=false;
+
+  }else if(amount < 100){
+
+    document.getElementById("withdrawAmountError").textContent=
+      "Minimum withdrawal ৳100।";
+
+    valid=false;
+
+  }else if(amount > 5000){
+
+    document.getElementById("withdrawAmountError").textContent=
+      "Maximum withdrawal ৳5000।";
+
+    valid=false;
+  }
+
+
+  if(valid){
+
+    document.getElementById("withdrawSuccess").style.display="block";
+
+  }
+
+});
+
+
+/* COPY REFERRAL */
+function copyReferral(){
+
+  const code=
+    document.getElementById("refCode").textContent;
+
+  if(navigator.clipboard){
+
+    navigator.clipboard.writeText(code);
+
+  }
+
+  const box=
+    document.getElementById("refSuccess");
+
+  box.textContent=
+    "✅ Referral Code copied: " + code;
+
+  box.style.display="block";
+}
+
+
+/* SHARE REFERRAL */
+function shareReferral(){
+
+  const code=
+    document.getElementById("refCode").textContent;
+
+  const text=
+    "CashBD-তে যোগ দিন। আমার Referral Code: " + code;
+
+  if(navigator.share){
+
+    navigator.share({
+      title:"CashBD",
+      text:text
+    });
+
+  }else{
+
+    copyReferral();
+
+  }
 
 }
+
 </script>
 
 </body>
