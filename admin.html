@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<title>CashBD Admin Panel</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<style>
+:root{--bg:#120b24;--card:#1d1235;--card2:#251743;--gold:#ffd84d;--text:#fff;--muted:#bdb4ce;--red:#ff5c73;--green:#4ee38b}
+*{box-sizing:border-box}
+body{margin:0;background:linear-gradient(180deg,#241040,#0e081b);color:var(--text);font-family:Arial,sans-serif}
+header{position:sticky;top:0;z-index:5;padding:16px;background:#160c2a;border-bottom:1px solid #49325e}
+h1{margin:0;font-size:22px;color:var(--gold)} h2{font-size:18px;margin:0 0 12px}
+main{padding:14px;max-width:900px;margin:auto}
+.card{background:var(--card);border:1px solid #4d3565;border-radius:16px;padding:14px;margin-bottom:14px;box-shadow:0 8px 24px #0004}
+.row{display:flex;gap:8px;flex-wrap:wrap}
+input,select,textarea{width:100%;background:#130c25;color:#fff;border:1px solid #58406f;border-radius:10px;padding:11px;margin:5px 0 10px;outline:none}
+button{border:0;border-radius:10px;padding:10px 13px;font-weight:700;cursor:pointer}
+.primary{background:var(--gold);color:#160d25}.green{background:var(--green);color:#071b10}.red{background:var(--red);color:#26030a}.dark{background:#34234c;color:#fff}
+.item{border:1px solid #4b3563;border-radius:12px;padding:12px;margin:9px 0;background:var(--card2)}
+.small{font-size:13px;color:var(--muted);line-height:1.55}.money{color:var(--gold);font-weight:700}
+.badge{display:inline-block;padding:4px 8px;border-radius:99px;background:#3a2853;color:var(--gold);font-size:12px}
+.status{margin:8px 0;color:var(--muted)}
+#toast{position:fixed;left:12px;right:12px;bottom:15px;padding:12px;border-radius:12px;background:#2b1b42;border:1px solid #6c4c88;display:none;text-align:center;z-index:20}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+@media(max-width:560px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header>
+  <h1>CashBD • Admin Panel</h1>
+  <div id="adminInfo" class="small">Checking admin access...</div>
+</header>
+
+<main>
+  <div class="card">
+    <div class="row">
+      <button class="primary" onclick="loadAll()">↻ Refresh All</button>
+      <button class="dark" onclick="tg.close()">Close</button>
+    </div>
+    <div id="status" class="status"></div>
+  </div>
+
+  <section class="card">
+    <h2>⏳ Pending Activation</h2>
+    <div id="activations">Loading...</div>
+  </section>
+
+  <section class="card">
+    <h2>💸 Pending Withdrawals</h2>
+    <div id="withdrawals">Loading...</div>
+  </section>
+
+  <section class="card">
+    <h2>➕ Add Task / Video</h2>
+    <div class="grid">
+      <div><label>Title</label><input id="taskTitle" placeholder="যেমন: Watch video"></div>
+      <div><label>Reward (৳)</label><input id="taskReward" type="number" min="0" step="0.01" placeholder="5"></div>
+    </div>
+    <label>Description</label>
+    <textarea id="taskDescription" rows="3" placeholder="Task details"></textarea>
+    <div class="grid">
+      <div>
+        <label>Task Type</label>
+        <select id="taskType">
+          <option value="website">Website Visit</option>
+          <option value="video">Video</option>
+          <option value="app">App</option>
+          <option value="custom">Custom</option>
+        </select>
+      </div>
+      <div>
+        <label>Target URL</label>
+        <input id="taskUrl" placeholder="https://example.com">
+      </div>
+    </div>
+    <button class="primary" onclick="createTask()">Add Task</button>
+  </section>
+
+  <section class="card">
+    <h2>📋 Tasks</h2>
+    <div id="tasks">Loading...</div>
+  </section>
+
+  <section class="card">
+    <h2>👥 Users</h2>
+    <div id="users">Loading...</div>
+  </section>
+</main>
+
+<div id="toast"></div>
+
+<script>
+const tg = window.Telegram && window.Telegram.WebApp;
+if(tg){tg.ready();tg.expand();}
+
+const API="https://tnjaxkdthrxucyglaljf.supabase.co/functions/v1/cashbd-api";
+const initData = tg ? tg.initData : "";
+
+function esc(v){
+  return String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
+}
+function money(v){return "৳"+Number(v||0).toFixed(2)}
+function toast(msg){
+  const e=document.getElementById("toast");e.textContent=msg;e.style.display="block";
+  clearTimeout(window.__toast);window.__toast=setTimeout(()=>e.style.display="none",2800);
+}
+async function api(action, extra={}){
+  if(!initData) throw new Error("এই Admin Panel অবশ্যই Telegram Mini App-এর ভিতর খুলতে হবে।");
+  const r=await fetch(API,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({initData,action,...extra})});
+  const data=await r.json().catch(()=>({success:false,message:"Invalid server response"}));
+  if(!r.ok || !data.success) throw new Error(data.message||"Request failed");
+  return data;
+}
+
+async function checkMe(){
+  const d=await api("me");
+  if(!d.is_admin) throw new Error("এই Telegram account admin হিসেবে অনুমোদিত নয়।");
+  document.getElementById("adminInfo").textContent =
+    "Admin: "+(d.user.full_name||"")+
+    " • Telegram ID: "+d.user.telegram_id;
+}
+
+async function loadActivations(){
+  const e=document.getElementById("activations");
+  try{
+    const d=await api("admin_activations");
+    if(!d.requests.length){e.innerHTML='<div class="small">No pending activation requests.</div>';return}
+    e.innerHTML=d.requests.map(x=>{
+      const u=x.users||{};
+      return `<div class="item">
+        <div><span class="badge">${esc(x.method)}</span> <span class="money">${money(x.amount)}</span></div>
+        <b>${esc(u.full_name||"User")}</b>
+        <div class="small">Telegram ID: ${esc(u.telegram_id)}<br>Username: ${esc(u.username||"-")}<br>Transaction ID: <b>${esc(x.transaction_id)}</b><br>Time: ${esc(x.created_at)}</div>
+        <div class="row" style="margin-top:8px">
+          <button class="green" onclick="approveActivation('${esc(x.id)}')">✓ Verify & Activate</button>
+          <button class="red" onclick="rejectActivation('${esc(x.id)}')">✕ Reject</button>
+        </div>
+      </div>`;
+    }).join("");
+  }catch(err){e.innerHTML='<div class="small">'+esc(err.message)+'</div>'}
+}
+
+async function approveActivation(id){
+  if(!confirm("Payment দেখে সত্যি হলে তবেই Approve করুন। Continue?"))return;
+  try{await api("admin_approve_activation",{request_id:id});toast("Account activated.");loadAll()}
+  catch(err){toast(err.message)}
+}
+async function rejectActivation(id){
+  if(!confirm("এই activation request reject করবেন?"))return;
+  try{await api("admin_reject_activation",{request_id:id});toast("Request rejected.");loadAll()}
+  catch(err){toast(err.message)}
+}
+
+async function loadWithdrawals(){
+  const e=document.getElementById("withdrawals");
+  try{
+    const d=await api("admin_withdrawals");
+    if(!d.requests.length){e.innerHTML='<div class="small">No pending withdrawal requests.</div>';return}
+    e.innerHTML=d.requests.map(x=>{
+      const u=x.users||{};
+      return `<div class="item">
+        <div><span class="badge">${esc(x.method)}</span> <span class="money">${money(x.amount)}</span></div>
+        <b>${esc(u.full_name||"User")}</b>
+        <div class="small">Telegram ID: ${esc(u.telegram_id)}<br>Number: <b>${esc(x.phone_number)}</b><br>User balance: ${money(u.balance)}<br>Time: ${esc(x.created_at)}</div>
+        <div class="row" style="margin-top:8px">
+          <button class="green" onclick="approveWithdrawal('${esc(x.id)}')">✓ Paid & Approve</button>
+          <button class="red" onclick="rejectWithdrawal('${esc(x.id)}')">✕ Reject</button>
+        </div>
+      </div>`;
+    }).join("");
+  }catch(err){e.innerHTML='<div class="small">'+esc(err.message)+'</div>'}
+}
+async function approveWithdrawal(id){
+  if(!confirm("আপনি কি সত্যিই টাকা পাঠিয়ে দিয়েছেন? পাঠানো হলে Approve করুন।"))return;
+  try{await api("admin_approve_withdrawal",{request_id:id});toast("Withdrawal approved.");loadAll()}
+  catch(err){toast(err.message)}
+}
+async function rejectWithdrawal(id){
+  if(!confirm("এই withdrawal request reject করবেন?"))return;
+  try{await api("admin_reject_withdrawal",{request_id:id});toast("Withdrawal rejected.");loadAll()}
+  catch(err){toast(err.message)}
+}
+
+async function createTask(){
+  const title=document.getElementById("taskTitle").value.trim();
+  const reward=Number(document.getElementById("taskReward").value);
+  const description=document.getElementById("taskDescription").value.trim();
+  const task_type=document.getElementById("taskType").value;
+  const target_url=document.getElementById("taskUrl").value.trim();
+  try{
+    await api("admin_create_task",{title,reward,description,task_type,target_url});
+    toast("Task added.");
+    document.getElementById("taskTitle").value="";
+    document.getElementById("taskReward").value="";
+    document.getElementById("taskDescription").value="";
+    document.getElementById("taskUrl").value="";
+    loadTasks();
+  }catch(err){toast(err.message)}
+}
+async function loadTasks(){
+  const e=document.getElementById("tasks");
+  try{
+    const d=await api("admin_tasks");
+    if(!d.tasks.length){e.innerHTML='<div class="small">No tasks yet.</div>';return}
+    e.innerHTML=d.tasks.map(x=>`
+      <div class="item">
+        <b>${esc(x.title)}</b>
+        <span class="badge">${esc(x.task_type)}</span>
+        <div class="money">${money(x.reward)}</div>
+        <div class="small">${esc(x.description||"")}${x.target_url?'<br>'+esc(x.target_url):""}</div>
+        <button class="dark" onclick="toggleTask('${esc(x.id)}',${!x.is_active})">${x.is_active?"Disable":"Enable"}</button>
+      </div>`).join("");
+  }catch(err){e.innerHTML='<div class="small">'+esc(err.message)+'</div>'}
+}
+async function toggleTask(id,active){
+  try{await api("admin_set_task_active",{task_id:id,active});toast("Task updated.");loadTasks()}
+  catch(err){toast(err.message)}
+}
+
+async function loadUsers(){
+  const e=document.getElementById("users");
+  try{
+    const d=await api("admin_users");
+    e.innerHTML=d.users.map(u=>`
+      <div class="item">
+        <b>${esc(u.full_name||"User")}</b>
+        <div class="small">ID: ${esc(u.telegram_id)} • ${esc(u.username||"-")}<br>Balance: <span class="money">${money(u.balance)}</span> • ${u.is_activated?"Activated":"Not Activated"}<br>Referral: ${esc(u.referral_code)}</div>
+      </div>`).join("");
+  }catch(err){e.innerHTML='<div class="small">'+esc(err.message)+'</div>'}
+}
+
+async function loadAll(){
+  document.getElementById("status").textContent="Loading...";
+  await Promise.all([loadActivations(),loadWithdrawals(),loadTasks(),loadUsers()]);
+  document.getElementById("status").textContent="Updated: "+new Date().toLocaleString();
+}
+(async()=>{
+  try{await checkMe();await loadAll()}
+  catch(err){
+    document.getElementById("adminInfo").textContent=err.message;
+    document.getElementById("status").textContent="Admin access failed";
+    toast(err.message);
+  }
+})();
+</script>
+</body>
+</html>
