@@ -112,7 +112,13 @@ input:focus,select:focus{border-color:var(--gold)}
 <button class="card secondary" onclick="showPage('earn')">
 <div style="font-size:35px">💰</div>
 <h3>Earn</h3>
-<div class="muted small">Website • Video • App • Custom</div>
+<div class="muted small">All earning tasks</div>
+</button>
+
+<button class="card secondary" onclick="showPage('video')">
+<div style="font-size:35px">🎬</div>
+<h3>ভিডিও দেখে ইনকাম</h3>
+<div class="muted small">Video দেখুন • Reward নিন</div>
 </button>
 
 <button class="card secondary" onclick="showPage('withdraw')">
@@ -182,8 +188,21 @@ input:focus,select:focus{border-color:var(--gold)}
 </div>
 </div>
 
-<div id="specialStatus" class="card hidden"></div>
 <div id="tasksList"></div>
+
+</main>
+
+<main id="video" class="page hidden">
+
+<div class="back" onclick="showPage('home')">← Home</div>
+
+<div class="card">
+<h2>🎬 ভিডিও দেখে ইনকাম</h2>
+<p class="muted">Admin Panel থেকে যোগ করা active video task এখানে দেখা যাবে। ভিডিও খুলে নির্ধারিত সময় অপেক্ষা করলে reward claim করার সুযোগ থাকবে।</p>
+<div id="videoStatus" class="status"></div>
+</div>
+
+<div id="videoTasksList"></div>
 
 </main>
 
@@ -472,6 +491,8 @@ if(name==="home")refreshMe();
 
 if(name==="earn")loadTasks();
 
+if(name==="video")loadVideoTasks();
+
 if(name==="leaderboard")loadLeaderboard();
 
 if(name==="history")loadHistory();
@@ -608,6 +629,140 @@ ${label}
 
 box.innerHTML=
 `<div class="empty">${esc(e.message)}</div>`;
+
+}
+
+}
+
+async function loadVideoTasks(){
+
+const box=document.getElementById("videoTasksList");
+
+box.innerHTML=
+'<div class="empty">Video tasks loading…</div>';
+
+try{
+
+const d=await api("tasks");
+
+const tasks=(d.tasks||[])
+.filter(t=>
+String(t.task_type||"").toLowerCase()==="video"
+);
+
+if(!tasks.length){
+
+box.innerHTML=
+'<div class="empty">এখন কোনো active video task নেই। Admin Panel থেকে Video task যোগ করুন।</div>';
+
+return;
+
+}
+
+box.innerHTML=tasks.map(t=>`
+
+<div class="card task">
+
+<div class="ico">🎬</div>
+
+<h3>${esc(t.title)}</h3>
+
+<div class="muted">
+${esc(
+t.description||
+"ভিডিও দেখুন এবং task সম্পূর্ণ করুন।"
+)}
+</div>
+
+<div class="reward">
+${money(t.reward)}
+</div>
+
+<button class="btn primary"
+onclick="startVideoTask(
+${JSON.stringify(t.id)},
+${JSON.stringify(t.target_url||"")},
+${JSON.stringify(t.title||"Video Task")}
+)">
+▶️ ভিডিও দেখুন ও ইনকাম করুন
+</button>
+
+</div>
+
+`).join("");
+
+}catch(e){
+
+box.innerHTML=
+`<div class="empty">${esc(e.message)}</div>`;
+
+}
+
+}
+
+async function startVideoTask(id,url,title){
+
+if(!state.user?.is_activated){
+
+showPage("activation");
+
+return;
+
+}
+
+if(url){
+
+try{
+
+if(tg&&tg.openLink)
+tg.openLink(url);
+else
+window.open(url,"_blank");
+
+}catch(_){
+
+window.open(url,"_blank");
+
+}
+
+}
+
+if(!confirm(
+`${title}\n\nভিডিওটি খুলে অন্তত 10 সেকেন্ড অপেক্ষা করে OK চাপুন।`
+))
+return;
+
+await new Promise(
+r=>setTimeout(r,10000)
+);
+
+try{
+
+const d=await api(
+"complete_task",
+{
+task_id:id
+}
+);
+
+state.user=d.user;
+
+updateUI();
+
+setStatus(
+"videoStatus",
+d.message||"Video reward added",
+true
+);
+
+await loadVideoTasks();
+
+}catch(e){
+
+setStatus(
+"videoStatus",
+e.message
+);
 
 }
 
