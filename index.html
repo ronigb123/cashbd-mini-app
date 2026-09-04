@@ -5,67 +5,280 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <title>CashBD</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
 <style>
 *{box-sizing:border-box}
-:root{--bg:#0d0618;--card:#17102a;--card2:#21143b;--gold:#ffd34d;--gold2:#ffb62e;--text:#fff;--muted:#b9afc9;--line:#5b4720;--purple:#8d4cff;--green:#35d98a;--red:#ff5d73}
-body{margin:0;background:linear-gradient(180deg,#24113f,#10061f 55%,#090411);color:var(--text);font-family:Arial,"Noto Sans Bengali",sans-serif;min-height:100vh}
+:root{
+--bg:#0d0618;
+--card:#17102a;
+--card2:#21143b;
+--gold:#ffd34d;
+--gold2:#ffb62e;
+--text:#fff;
+--muted:#b9afc9;
+--line:#5b4720;
+--purple:#8d4cff;
+--green:#35d98a;
+--red:#ff5d73
+}
+body{
+margin:0;
+background:linear-gradient(180deg,#24113f,#10061f 55%,#090411);
+color:var(--text);
+font-family:Arial,"Noto Sans Bengali",sans-serif;
+min-height:100vh
+}
 button,input,select{font:inherit}
 button{cursor:pointer}
-#app{max-width:720px;margin:auto;min-height:100vh;padding-bottom:90px}
+#app{
+max-width:720px;
+margin:auto;
+min-height:100vh;
+padding-bottom:90px
+}
 .top{padding:24px 24px 10px}
-.brand{display:flex;justify-content:space-between;align-items:center}
+.brand{
+display:flex;
+justify-content:space-between;
+align-items:center
+}
 .brand h1{margin:0;font-size:29px}
-.badge{border:1px solid #806223;color:var(--gold);padding:8px 12px;border-radius:20px;font-size:12px}
-.notice{margin:12px 24px 0;border:1px solid #58431e;background:#160d27;border-radius:16px;padding:12px 14px;overflow:hidden;white-space:nowrap}
-.notice span{display:inline-block;animation:scroll 18s linear infinite}
-@keyframes scroll{from{transform:translateX(100%)}to{transform:translateX(-100%)}}
+.badge{
+border:1px solid #806223;
+color:var(--gold);
+padding:8px 12px;
+border-radius:20px;
+font-size:12px
+}
+.notice{
+margin:12px 24px 0;
+border:1px solid #58431e;
+background:#160d27;
+border-radius:16px;
+padding:12px 14px;
+overflow:hidden;
+white-space:nowrap
+}
+.notice span{
+display:inline-block;
+animation:scroll 18s linear infinite
+}
+@keyframes scroll{
+from{transform:translateX(100%)}
+to{transform:translateX(-100%)}
+}
 .page{padding:14px 24px}
 .hidden{display:none!important}
-.card{background:linear-gradient(145deg,rgba(31,19,53,.98),rgba(16,9,31,.98));border:1px solid #4d3a1d;border-radius:23px;padding:21px;margin-bottom:15px;box-shadow:0 8px 24px #0002}
+.card{
+background:linear-gradient(145deg,rgba(31,19,53,.98),rgba(16,9,31,.98));
+border:1px solid #4d3a1d;
+border-radius:23px;
+padding:21px;
+margin-bottom:15px;
+box-shadow:0 8px 24px #0002
+}
 .card h2{margin:0 0 8px;font-size:28px}
 .card h3{margin:7px 0}
 .muted{color:var(--muted);line-height:1.55}
 .balance{text-align:center;border-color:#9b7320}
 .balance .label{color:#d9c98f;font-size:14px}
-.amount{font-size:40px;font-weight:900;color:var(--gold);margin:5px 0}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.btn{width:100%;border:0;border-radius:15px;padding:14px 16px;font-weight:900}
-.primary{background:linear-gradient(135deg,var(--gold),var(--gold2));color:#17100b}
-.secondary{background:#26173f;color:#fff;border:1px solid #694f27}
-.green{background:#123b2a;color:#fff;border:1px solid #2cae70}
-.danger{background:#461525;color:#fff;border:1px solid #a73551}
-.back{display:inline-block;color:var(--gold);font-weight:900;margin:4px 0 16px}
-.info{background:#25183f;border:1px solid #3d285e;border-radius:15px;padding:13px;margin-top:11px;color:#d9cfdf}
-.task{min-height:185px;border-color:#3d285c}
+.amount{
+font-size:40px;
+font-weight:900;
+color:var(--gold);
+margin:5px 0
+}
+.grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:12px
+}
+.btn{
+width:100%;
+border:0;
+border-radius:15px;
+padding:14px 16px;
+font-weight:900
+}
+.primary{
+background:linear-gradient(135deg,var(--gold),var(--gold2));
+color:#17100b
+}
+.secondary{
+background:#26173f;
+color:#fff;
+border:1px solid #694f27
+}
+.green{
+background:#123b2a;
+color:#fff;
+border:1px solid #2cae70
+}
+.danger{
+background:#461525;
+color:#fff;
+border:1px solid #a73551
+}
+.back{
+display:inline-block;
+color:var(--gold);
+font-weight:900;
+margin:4px 0 16px
+}
+.info{
+background:#25183f;
+border:1px solid #3d285e;
+border-radius:15px;
+padding:13px;
+margin-top:11px;
+color:#d9cfdf
+}
+.task{
+min-height:185px;
+border-color:#3d285c
+}
 .task .ico{font-size:38px}
-.reward{color:var(--gold);font-weight:900;font-size:21px;margin:8px 0}
-.status{display:none;padding:11px 13px;border-radius:13px;margin:10px 0}
-.status.ok{display:block;background:#103624;border:1px solid #2a9d64;color:#bdffdb}
-.status.err{display:block;background:#421526;border:1px solid #a83752;color:#ffd0d8}
-.empty{padding:24px;text-align:center;color:var(--muted);border:1px dashed #4b3960;border-radius:16px}
-.codebox{background:#0e0719;border:1px dashed #5b476d;border-radius:17px;padding:18px;text-align:center;font-size:27px;font-weight:900;color:var(--gold);word-break:break-all}
-.row{display:flex;gap:10px}
+.reward{
+color:var(--gold);
+font-weight:900;
+font-size:21px;
+margin:8px 0
+}
+.status{
+display:none;
+padding:11px 13px;
+border-radius:13px;
+margin:10px 0
+}
+.status.ok{
+display:block;
+background:#103624;
+border:1px solid #2a9d64;
+color:#bdffdb
+}
+.status.err{
+display:block;
+background:#421526;
+border:1px solid #a83752;
+color:#ffd0d8
+}
+.empty{
+padding:24px;
+text-align:center;
+color:var(--muted);
+border:1px dashed #4b3960;
+border-radius:16px
+}
+.codebox{
+background:#0e0719;
+border:1px dashed #5b476d;
+border-radius:17px;
+padding:18px;
+text-align:center;
+font-size:27px;
+font-weight:900;
+color:var(--gold);
+word-break:break-all
+}
+.row{
+display:flex;
+gap:10px
+}
 .row>*{flex:1}
-label{display:block;color:#ddd;font-size:14px;margin-top:8px}
-input,select{width:100%;background:#0e0719;color:#fff;border:1px solid #57436f;border-radius:14px;padding:13px;margin:6px 0 10px;outline:0}
-input:focus,select:focus{border-color:var(--gold)}
-.item{padding:13px 0;border-bottom:1px solid #322442}
+label{
+display:block;
+color:#ddd;
+font-size:14px;
+margin-top:8px
+}
+input,select{
+width:100%;
+background:#0e0719;
+color:#fff;
+border:1px solid #57436f;
+border-radius:14px;
+padding:13px;
+margin:6px 0 10px;
+outline:0
+}
+input:focus,select:focus{
+border-color:var(--gold)
+}
+.item{
+padding:13px 0;
+border-bottom:1px solid #322442
+}
 .item:last-child{border-bottom:0}
-.itemtop{display:flex;justify-content:space-between;gap:10px}
-.money{color:var(--gold);font-weight:900}
-.rank{display:flex;gap:11px;align-items:center;padding:12px 0;border-bottom:1px solid #322442}
-.pos{width:35px;text-align:center;color:var(--gold);font-weight:900}
-.avatar{width:40px;height:40px;border-radius:50%;background:#30204b;display:grid;place-items:center}
+.itemtop{
+display:flex;
+justify-content:space-between;
+gap:10px
+}
+.money{
+color:var(--gold);
+font-weight:900
+}
+.rank{
+display:flex;
+gap:11px;
+align-items:center;
+padding:12px 0;
+border-bottom:1px solid #322442
+}
+.pos{
+width:35px;
+text-align:center;
+color:var(--gold);
+font-weight:900
+}
+.avatar{
+width:40px;
+height:40px;
+border-radius:50%;
+background:#30204b;
+display:grid;
+place-items:center
+}
 .rankname{flex:1}
-.bottom{position:fixed;left:0;right:0;bottom:0;background:#0d0617f7;border-top:1px solid #2b2036;z-index:20}
-.nav{max-width:720px;margin:auto;display:grid;grid-template-columns:repeat(5,1fr)}
-.nav button{background:0;border:0;color:#9f96ac;padding:10px 2px 8px;font-size:12px}
-.nav button .ni{display:block;font-size:24px;margin-bottom:3px}
+.bottom{
+position:fixed;
+left:0;
+right:0;
+bottom:0;
+background:#0d0617f7;
+border-top:1px solid #2b2036;
+z-index:20
+}
+.nav{
+max-width:720px;
+margin:auto;
+display:grid;
+grid-template-columns:repeat(5,1fr)
+}
+.nav button{
+background:0;
+border:0;
+color:#9f96ac;
+padding:10px 2px 8px;
+font-size:12px
+}
+.nav button .ni{
+display:block;
+font-size:24px;
+margin-bottom:3px
+}
 .nav button.active{color:var(--gold)}
+
 @media(max-width:430px){
 .page{padding:12px 18px}
-.top{padding-left:18px;padding-right:18px}
-.notice{margin-left:18px;margin-right:18px}
+.top{
+padding-left:18px;
+padding-right:18px
+}
+.notice{
+margin-left:18px;
+margin-right:18px
+}
 .grid{gap:10px}
 .card{padding:18px}
 .amount{font-size:36px}
@@ -85,7 +298,9 @@ input:focus,select:focus{border-color:var(--gold)}
 </div>
 
 <div class="notice">
-<span>📢 CashBD • Account activation ৳110 • Successful referral ৳30 • Minimum withdrawal ৳100 • Maximum ৳5,000</span>
+<span>
+📢 CashBD • Account activation ৳110 • Successful referral ৳30 • Minimum withdrawal ৳100 • Maximum ৳5,000
+</span>
 </div>
 
 <main id="home" class="page">
@@ -98,7 +313,9 @@ input:focus,select:focus{border-color:var(--gold)}
 
 <div class="card">
 <h2>CashBD</h2>
-<p class="muted">Tasks, daily bonus এবং approved earning activities থেকে সরাসরি ৳ balance তৈরি করুন।</p>
+<p class="muted">
+Tasks, daily bonus এবং approved earning activities থেকে সরাসরি ৳ balance তৈরি করুন।
+</p>
 <div id="activationBox"></div>
 </div>
 
@@ -114,6 +331,12 @@ input:focus,select:focus{border-color:var(--gold)}
 <div style="font-size:35px">💰</div>
 <h3>Earn</h3>
 <div class="muted small">Website • Video • App • Custom</div>
+</button>
+
+<button class="card secondary" onclick="showPage('video')">
+<div style="font-size:35px">🎬</div>
+<h3>ভিডিও দেখে ইনকাম</h3>
+<div class="muted small">Video দেখুন • Reward নিন</div>
 </button>
 
 <button class="card secondary" onclick="showPage('withdraw')">
@@ -173,7 +396,6 @@ input:focus,select:focus{border-color:var(--gold)}
 <div class="back" onclick="showPage('home')">← Home</div>
 
 <div class="card">
-
 <h2>Earn</h2>
 
 <p class="muted">
@@ -199,6 +421,28 @@ Admin Panel থেকে যোগ করা active task এখানে automat
 <div id="specialStatus" class="card hidden"></div>
 
 <div id="tasksList"></div>
+
+</main>
+
+
+<main id="video" class="page hidden">
+
+<div class="back" onclick="showPage('home')">← Home</div>
+
+<div class="card">
+
+<h2>🎬 ভিডিও দেখে ইনকাম</h2>
+
+<p class="muted">
+Admin Panel থেকে যোগ করা active video task এখানে দেখা যাবে।
+ভিডিও খুলে নির্ধারিত সময় অপেক্ষা করলে reward claim করার সুযোগ থাকবে।
+</p>
+
+<div id="videoStatus" class="status"></div>
+
+</div>
+
+<div id="videoTasksList"></div>
 
 </main>
 
@@ -255,8 +499,11 @@ Approved হলে backend balance থেকে amount deduct করবে।
 </div>
 
 <div class="card">
+
 <h3>Withdrawal History</h3>
+
 <div id="withdrawalHistory"></div>
+
 </div>
 
 </main>
@@ -277,15 +524,19 @@ Approved হলে backend balance থেকে amount deduct করবে।
 <div id="refCode" class="codebox">—</div>
 
 <div style="margin-top:12px">
+
 <button class="btn primary" onclick="copyReferral()">
 📋 Copy Referral Code
 </button>
+
 </div>
 
 <div style="margin-top:10px">
+
 <button class="btn secondary" onclick="shareReferral()">
 📤 Share Referral
 </button>
+
 </div>
 
 <div id="referStatus" class="status"></div>
@@ -293,8 +544,11 @@ Approved হলে backend balance থেকে amount deduct করবে।
 </div>
 
 <div class="card">
+
 <h3>Referral History</h3>
+
 <div id="referralHistory"></div>
+
 </div>
 
 </main>
@@ -435,24 +689,45 @@ Admin যাচাই করে approve করলে account activated হবে
 
 <nav class="nav">
 
-<button data-page="home" class="active" onclick="showPage('home')">
-<span class="ni">⌂</span>Home
+<button
+data-page="home"
+class="active"
+onclick="showPage('home')"
+>
+<span class="ni">⌂</span>
+Home
 </button>
 
-<button data-page="earn" onclick="showPage('earn')">
-<span class="ni">💰</span>Earn
+<button
+data-page="earn"
+onclick="showPage('earn')"
+>
+<span class="ni">💰</span>
+Earn
 </button>
 
-<button data-page="withdraw" onclick="showPage('withdraw')">
-<span class="ni">৳</span>Withdraw
+<button
+data-page="withdraw"
+onclick="showPage('withdraw')"
+>
+<span class="ni">৳</span>
+Withdraw
 </button>
 
-<button data-page="refer" onclick="showPage('refer')">
-<span class="ni">👥</span>Refer
+<button
+data-page="refer"
+onclick="showPage('refer')"
+>
+<span class="ni">👥</span>
+Refer
 </button>
 
-<button data-page="support" onclick="showPage('support')">
-<span class="ni">💬</span>Support
+<button
+data-page="support"
+onclick="showPage('support')"
+>
+<span class="ni">💬</span>
+Support
 </button>
 
 </nav>
@@ -475,7 +750,8 @@ let initData="";
 
 let state={
 user:null,
-is_admin:false
+is_admin:false,
+tasks:[]
 };
 
 if(tg){
@@ -496,8 +772,7 @@ m=>({
 }[m])
 );
 
-const money=v=>
-"৳"+Number(v||0).toFixed(2);
+const money=v=>"৳"+Number(v||0).toFixed(2);
 
 function setStatus(id,msg,ok=false){
 
@@ -556,12 +831,13 @@ document
 
 const p=document.getElementById(name);
 
-if(p)p.classList.remove("hidden");
+if(p)
+p.classList.remove("hidden");
 
 document
 .querySelectorAll(".nav button")
-.forEach(
-x=>x.classList.toggle(
+.forEach(x=>
+x.classList.toggle(
 "active",
 x.dataset.page===name
 )
@@ -572,6 +848,9 @@ refreshMe();
 
 if(name==="earn")
 loadTasks();
+
+if(name==="video")
+loadVideoTasks();
 
 if(name==="leaderboard")
 loadLeaderboard();
@@ -597,25 +876,31 @@ const u=state.user;
 
 if(!u)return;
 
-document.getElementById("balance").textContent=
-money(u.balance);
+document.getElementById("balance")
+.textContent=money(u.balance);
 
-document.getElementById("userName").textContent=
-u.full_name||"Telegram User";
+document.getElementById("userName")
+.textContent=u.full_name||"Telegram User";
 
-document.getElementById("refCode").textContent=
-u.referral_code||"—";
+document.getElementById("refCode")
+.textContent=u.referral_code||"—";
 
-document.getElementById("accountBadge").textContent=
+document.getElementById("accountBadge")
+.textContent=
 u.is_activated
 ?"Activated"
 :"Not Activated";
 
-document.getElementById("activationBox").innerHTML=
+document.getElementById("activationBox")
+.innerHTML=
 u.is_activated
+
 ?
+
 '<div class="info" style="border-color:#2eaa6d">✅ Account activated — eligible earning features চালু আছে।</div>'
+
 :
+
 '<div class="info">🔒 Account activation প্রয়োজন। <b style="color:var(--gold)">৳110</b> payment verify হওয়ার পর eligible features চালু হবে।</div><button class="btn primary" style="margin-top:11px" onclick="showPage(\'activation\')">Activate Account</button>';
 
 renderProfile();
@@ -635,11 +920,16 @@ state.is_admin=!!d.is_admin;
 
 updateUI();
 
-}catch(e){
+}
+catch(e){
 
-document.getElementById("accountBadge").textContent="Error";
+document.getElementById("accountBadge")
+.textContent="Error";
 
-setStatus("earnStatus",e.message);
+setStatus(
+"earnStatus",
+e.message
+);
 
 }
 
@@ -659,6 +949,8 @@ const d=await api("tasks");
 
 const tasks=d.tasks||[];
 
+state.tasks=tasks;
+
 if(!tasks.length){
 
 box.innerHTML=
@@ -669,11 +961,11 @@ return;
 }
 
 box.innerHTML=
-tasks.map(
-t=>{
+tasks.map(t=>{
 
 const type=
-String(t.task_type||"custom").toLowerCase();
+String(t.task_type||"custom")
+.toLowerCase();
 
 const icon=
 type==="website"
@@ -710,23 +1002,18 @@ ${money(t.reward)}
 
 <button
 class="btn primary"
-onclick="startTask(
-${JSON.stringify(t.id)},
-${JSON.stringify(t.target_url||"")},
-${JSON.stringify(type)},
-${JSON.stringify(t.title||"Task")},
-${JSON.stringify(t.reward||0)}
-)">
+onclick="startTaskById('${String(t.id)}')"
+>
 ${label}
 </button>
 
 </div>
 `;
 
-}
-).join("");
+}).join("");
 
-}catch(e){
+}
+catch(e){
 
 box.innerHTML=
 `<div class="empty">${esc(e.message)}</div>`;
@@ -736,7 +1023,166 @@ box.innerHTML=
 }
 
 
-async function startTask(id,url,type,title,reward){
+async function loadVideoTasks(){
+
+const box=
+document.getElementById("videoTasksList");
+
+box.innerHTML=
+'<div class="empty">Video tasks loading…</div>';
+
+try{
+
+const d=await api("tasks");
+
+const tasks=
+(d.tasks||[])
+.filter(
+t=>
+String(t.task_type||"")
+.toLowerCase()==="video"
+);
+
+state.tasks=tasks;
+
+if(!tasks.length){
+
+box.innerHTML=
+'<div class="empty">এখন কোনো active video task নেই। Admin Panel থেকে Video task যোগ করুন।</div>';
+
+return;
+
+}
+
+box.innerHTML=
+tasks.map(t=>`
+
+<div class="card task">
+
+<div class="ico">🎬</div>
+
+<h3>${esc(t.title)}</h3>
+
+<div class="muted">
+${esc(
+t.description||
+"ভিডিও দেখুন এবং task সম্পূর্ণ করুন।"
+)}
+</div>
+
+<div class="reward">
+${money(t.reward)}
+</div>
+
+<button
+class="btn primary"
+onclick="startTaskById('${String(t.id)}')"
+>
+▶️ ভিডিও দেখুন ও ইনকাম করুন
+</button>
+
+</div>
+
+`).join("");
+
+}
+catch(e){
+
+box.innerHTML=
+`<div class="empty">${esc(e.message)}</div>`;
+
+}
+
+}
+
+
+function openTaskUrl(url){
+
+if(!url)
+return false;
+
+try{
+
+if(tg&&tg.openLink){
+
+tg.openLink(url);
+
+return true;
+
+}
+
+const w=
+window.open(url,"_blank");
+
+return !!w;
+
+}
+catch(_){
+
+try{
+
+window.location.href=url;
+
+return true;
+
+}
+catch(__){
+
+return false;
+
+}
+
+}
+
+}
+
+
+async function startTaskById(id){
+
+const task=
+state.tasks.find(
+t=>String(t.id)===String(id)
+);
+
+if(!task){
+
+setStatus(
+"earnStatus",
+"Task পাওয়া যায়নি। আবার Earn page খুলুন।"
+);
+
+return;
+
+}
+
+const type=
+String(task.task_type||"custom")
+.toLowerCase();
+
+if(type==="video"){
+
+await startVideoTask(
+task.id,
+task.target_url||"",
+task.title||"Video Task"
+);
+
+}
+else{
+
+await startTask(
+task.id,
+task.target_url||"",
+type,
+task.title||"Task"
+);
+
+}
+
+}
+
+
+async function startVideoTask(id,url,title){
 
 if(!state.user?.is_activated){
 
@@ -746,21 +1192,27 @@ return;
 
 }
 
-url=String(url||"").trim();
-
-const kind=
-String(type||"custom").toLowerCase();
-
-const seconds=
-(kind==="website"||kind==="video"||kind==="app")
-?10
-:3;
-
 if(!url){
 
 setStatus(
-"earnStatus",
-"এই task-এর কোনো link সেট করা নেই।"
+"videoStatus",
+"Admin এখনো এই ভিডিওর URL যোগ করেননি。",
+false
+);
+
+return;
+
+}
+
+const opened=
+openTaskUrl(url);
+
+if(!opened){
+
+setStatus(
+"videoStatus",
+"ভিডিও খুলতে পারিনি। আবার চেষ্টা করুন।",
+false
 );
 
 return;
@@ -768,256 +1220,108 @@ return;
 }
 
 setStatus(
+"videoStatus",
+"ভিডিও খোলা হয়েছে। 10 সেকেন্ড পরে reward claim করা যাবে…",
+true
+);
+
+await new Promise(
+r=>setTimeout(r,10000)
+);
+
+try{
+
+const d=
+await api(
+"complete_task",
+{
+task_id:id
+}
+);
+
+state.user=d.user;
+
+updateUI();
+
+setStatus(
+"videoStatus",
+d.message||
+"ভিডিও reward যোগ হয়েছে",
+true
+);
+
+await loadVideoTasks();
+
+}
+catch(e){
+
+setStatus(
+"videoStatus",
+e.message,
+false
+);
+
+}
+
+}
+
+
+async function startTask(
+id,
+url,
+type,
+title
+){
+
+if(!state.user?.is_activated){
+
+showPage("activation");
+
+return;
+
+}
+
+if(!url){
+
+setStatus(
 "earnStatus",
-`⏳ ${title} চালু হচ্ছে…`
+"Admin এখনো এই task-এর URL যোগ করেননি।",
+false
 );
 
-const isTelegram=
-/^https?:\/\/(t\.me|telegram\.me)\//i.test(url);
-
-if(kind==="video"){
-
-const old=
-document.getElementById("cashbdVideoModal");
-
-if(old)old.remove();
-
-let embed=url;
-
-const m=
-url.match(
-/(?:youtube\.com\/(?:watch\?v=|shorts\/|embed\/)|youtu\.be\/)([A-Za-z0-9_-]{6,})/i
-);
-
-if(m){
-
-embed=
-"https://www.youtube.com/embed/"
-+m[1]
-+"?autoplay=1&rel=0";
+return;
 
 }
 
-const modal=
-document.createElement("div");
+const opened=
+openTaskUrl(url);
 
-modal.id="cashbdVideoModal";
+if(!opened){
 
-modal.style.cssText=
-"position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,.92);display:flex;align-items:center;justify-content:center;padding:14px;";
-
-modal.innerHTML=`
-
-<div style="
-width:100%;
-max-width:520px;
-background:#160d28;
-border:1px solid rgba(255,204,72,.45);
-border-radius:18px;
-padding:12px;
-box-sizing:border-box
-">
-
-<div style="
-display:flex;
-justify-content:space-between;
-align-items:center;
-color:#ffd447;
-font-weight:800;
-font-size:18px;
-margin:2px 4px 10px
-">
-
-<span>${esc(title)}</span>
-
-<button
-id="cashbdVideoClose"
-style="
-border:0;
-background:transparent;
-color:#fff;
-font-size:28px;
-line-height:1
-">
-×
-</button>
-
-</div>
-
-<div style="
-position:relative;
-width:100%;
-aspect-ratio:16/9;
-background:#000;
-border-radius:12px;
-overflow:hidden
-">
-
-<iframe
-src="${esc(embed)}"
-style="
-width:100%;
-height:100%;
-border:0
-"
-allow="autoplay; encrypted-media; picture-in-picture"
-allowfullscreen>
-</iframe>
-
-</div>
-
-<button
-id="cashbdVideoOpen"
-style="
-width:100%;
-margin-top:10px;
-padding:14px;
-border:0;
-border-radius:12px;
-background:#ffc83d;
-color:#111;
-font-weight:800;
-font-size:16px
-">
-▶️ ভিডিও বাইরে খুলুন
-</button>
-
-<div
-id="cashbdVideoTimer"
-style="
-text-align:center;
-color:#cfc6dc;
-padding:10px 0 2px
-">
-ভিডিও দেখে 10 সেকেন্ড অপেক্ষা করুন…
-</div>
-
-</div>
-`;
-
-document.body.appendChild(modal);
-
-document.getElementById(
-"cashbdVideoClose"
-).onclick=
-()=>modal.remove();
-
-document.getElementById(
-"cashbdVideoOpen"
-).onclick=()=>{
-
-try{
-
-if(
-isTelegram &&
-tg &&
-typeof tg.openTelegramLink==="function"
-){
-
-tg.openTelegramLink(url);
-
-}else if(
-tg &&
-typeof tg.openLink==="function"
-){
-
-tg.openLink(url);
-
-}else{
-
-window.open(
-url,
-"_blank",
-"noopener,noreferrer"
+setStatus(
+"earnStatus",
+"Task link খুলতে পারিনি। আবার চেষ্টা করুন।",
+false
 );
 
+return;
+
 }
 
-}catch(_){
+const seconds=
+(
+type==="website"||
+type==="video"||
+type==="app"
+)
+?10
+:3;
 
-try{
-
-window.open(
-url,
-"_blank",
-"noopener,noreferrer"
+setStatus(
+"earnStatus",
+`${title} খোলা হয়েছে। ${seconds} সেকেন্ড অপেক্ষা করুন…`,
+true
 );
-
-}catch(__){}
-
-}
-
-};
-
-let left=seconds;
-
-const timer=
-document.getElementById(
-"cashbdVideoTimer"
-);
-
-const iv=setInterval(()=>{
-
-left--;
-
-if(timer){
-
-timer.textContent=
-left>0
-?`ভিডিও দেখে আরও ${left} সেকেন্ড অপেক্ষা করুন…`
-:"সময় শেষ — Reward নেওয়া যাবে।";
-
-}
-
-if(left<=0)
-clearInterval(iv);
-
-},1000);
-
-}else{
-
-try{
-
-if(
-isTelegram &&
-tg &&
-typeof tg.openTelegramLink==="function"
-){
-
-tg.openTelegramLink(url);
-
-}else if(
-tg &&
-typeof tg.openLink==="function"
-){
-
-tg.openLink(url);
-
-}else{
-
-window.open(
-url,
-"_blank",
-"noopener,noreferrer"
-);
-
-}
-
-}catch(_){
-
-try{
-
-window.open(
-url,
-"_blank",
-"noopener,noreferrer"
-);
-
-}catch(__){}
-
-}
-
-}
 
 await new Promise(
 r=>setTimeout(
@@ -1028,7 +1332,7 @@ seconds*1000
 
 try{
 
-const data=
+const d=
 await api(
 "complete_task",
 {
@@ -1036,27 +1340,21 @@ task_id:id
 }
 );
 
-state.user=data.user;
+state.user=d.user;
 
 updateUI();
 
 setStatus(
 "earnStatus",
-data.message||
-(`${money(reward)} added.`),
+d.message||
+"Reward added",
 true
 );
 
 await loadTasks();
 
-const m=
-document.getElementById(
-"cashbdVideoModal"
-);
-
-if(m)m.remove();
-
-}catch(e){
+}
+catch(e){
 
 setStatus(
 "earnStatus",
@@ -1094,7 +1392,8 @@ d.message,
 true
 );
 
-}catch(e){
+}
+catch(e){
 
 setStatus(
 "earnStatus",
@@ -1131,7 +1430,8 @@ d.message,
 true
 );
 
-}catch(e){
+}
+catch(e){
 
 setStatus(
 "earnStatus",
@@ -1187,7 +1487,8 @@ document.getElementById(
 "activationTxn"
 ).value="";
 
-}catch(e){
+}
+catch(e){
 
 setStatus(
 "activationStatus",
@@ -1294,7 +1595,8 @@ document.getElementById(
 
 loadWithdrawalHistory();
 
-}catch(e){
+}
+catch(e){
 
 setStatus(
 "withdrawStatus",
@@ -1321,7 +1623,8 @@ setStatus(
 true
 );
 
-}catch(_){
+}
+catch(_){
 
 setStatus(
 "referStatus",
@@ -1347,18 +1650,16 @@ const url=
 if(
 tg&&
 tg.openTelegramLink
-){
+)
 
 tg.openTelegramLink(url);
 
-}else{
+else
 
 window.open(
 url,
 "_blank"
 );
-
-}
 
 }
 
@@ -1383,10 +1684,12 @@ d.leaderboard||[];
 
 box.innerHTML=
 rows.length
+
 ?
+
 rows.map(
-(u,i)=>
-`
+(u,i)=>`
+
 <div class="rank">
 
 <div class="pos">
@@ -1410,12 +1713,16 @@ ${money(u.balance)}
 </div>
 
 </div>
+
 `
 ).join("")
+
 :
+
 '<div class="empty">এখনো কোনো activated user নেই।</div>';
 
-}catch(e){
+}
+catch(e){
 
 box.innerHTML=
 `<div class="empty">${esc(e.message)}</div>`;
@@ -1445,39 +1752,57 @@ d.history||[];
 
 box.innerHTML=
 rows.length
+
 ?
+
 rows.map(
-x=>
-`
+x=>`
+
 <div class="item">
 
 <div class="itemtop">
 
 <b>
-${esc(x.description||x.type)}
+${esc(
+x.description||x.type
+)}
 </b>
 
 <span class="money">
-${Number(x.amount)>=0?"+":""}${money(x.amount)}
+
+${
+Number(x.amount)>=0
+?"+"
+:""
+}
+
+${money(x.amount)}
+
 </span>
 
 </div>
 
 <div class="muted small">
+
 ${esc(
 new Date(
 x.created_at
 ).toLocaleString("en-GB")
 )}
+
 </div>
 
 </div>
+
 `
 ).join("")
+
 :
+
 '<div class="empty">কোনো transaction নেই।</div>';
 
-}catch(e){
+}
+catch(e){
 
 box.innerHTML=
 `<div class="empty">${esc(e.message)}</div>`;
@@ -1500,17 +1825,21 @@ box.innerHTML=
 try{
 
 const d=
-await api("referral_history");
+await api(
+"referral_history"
+);
 
 const rows=
 d.referrals||[];
 
 box.innerHTML=
 rows.length
+
 ?
+
 rows.map(
-x=>
-`
+x=>`
+
 <div class="item">
 
 <div class="itemtop">
@@ -1518,33 +1847,45 @@ x=>
 <b>Referral</b>
 
 <span class="money">
+
 ${
 x.status==="successful"
 ?"+৳30.00"
 :"৳0.00"
 }
+
 </span>
 
 </div>
 
 <div class="muted small">
+
 Status:
-${esc(x.status||"pending")}
+${esc(
+x.status||"pending"
+)}
+
 •
+
 ${esc(
 new Date(
 x.created_at
 ).toLocaleString("en-GB")
 )}
+
 </div>
 
 </div>
+
 `
 ).join("")
+
 :
+
 '<div class="empty">এখনো referral history নেই।</div>';
 
-}catch(e){
+}
+catch(e){
 
 box.innerHTML=
 `<div class="empty">${esc(e.message)}</div>`;
@@ -1561,7 +1902,8 @@ document.getElementById(
 "withdrawalHistory"
 );
 
-if(!box)return;
+if(!box)
+return;
 
 box.innerHTML=
 '<div class="empty">Loading…</div>';
@@ -1569,17 +1911,21 @@ box.innerHTML=
 try{
 
 const d=
-await api("withdrawal_history");
+await api(
+"withdrawal_history"
+);
 
 const rows=
 d.withdrawals||[];
 
 box.innerHTML=
 rows.length
+
 ?
+
 rows.map(
-x=>
-`
+x=>`
+
 <div class="item">
 
 <div class="itemtop">
@@ -1597,23 +1943,31 @@ ${esc(x.phone_number||"")}
 </div>
 
 <div class="muted small">
+
 Status:
 ${esc(x.status||"pending")}
+
 •
+
 ${esc(
 new Date(
 x.created_at
 ).toLocaleString("en-GB")
 )}
+
 </div>
 
 </div>
+
 `
 ).join("")
+
 :
+
 '<div class="empty">কোনো withdrawal history নেই।</div>';
 
-}catch(e){
+}
+catch(e){
 
 box.innerHTML=
 `<div class="empty">${esc(e.message)}</div>`;
@@ -1627,21 +1981,29 @@ function renderProfile(){
 
 const u=state.user;
 
-if(!u)return;
+if(!u)
+return;
 
 document.getElementById(
 "profileInfo"
 ).innerHTML=
+
 `
+
 <div class="item">
+
 <b>Name</b>
+
 <div class="muted">
 ${esc(u.full_name||"-")}
 </div>
+
 </div>
 
 <div class="item">
+
 <b>Username</b>
+
 <div class="muted">
 ${esc(
 u.username
@@ -1649,30 +2011,43 @@ u.username
 :"-"
 )}
 </div>
+
 </div>
 
 <div class="item">
+
 <b>Telegram ID</b>
+
 <div class="muted">
 ${esc(u.telegram_id)}
 </div>
+
 </div>
 
 <div class="item">
+
 <b>Referral Code</b>
+
 <div class="muted">
 ${esc(u.referral_code)}
 </div>
+
 </div>
 
 <div class="item">
+
 <b>Status</b>
+
 <div class="muted">
-${u.is_activated
+${
+u.is_activated
 ?"Activated"
-:"Not Activated"}
+:"Not Activated"
+}
 </div>
+
 </div>
+
 `;
 
 }
@@ -1686,11 +2061,11 @@ const u=
 if(
 tg&&
 tg.openTelegramLink
-){
+)
 
 tg.openTelegramLink(u);
 
-}else{
+else
 
 window.open(
 u,
@@ -1699,12 +2074,13 @@ u,
 
 }
 
-}
-
 
 (async function(){
 
-if(!tg||!initData){
+if(
+!tg||
+!initData
+){
 
 document.getElementById(
 "accountBadge"
