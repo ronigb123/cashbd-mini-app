@@ -7,7 +7,7 @@
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <style>
 *{box-sizing:border-box}
-:root{--bg:#0d0618;--card:#17102a;--card2:#21143b;--gold:#ffd34d;--gold2:#ffb62e;--text:#fff;--muted:#b9afc9;--line:#5b4720;--purple:#8d4cff;--green:#35d98a;--red:#ff5d73}
+:root{--bg:#0d0618;--card:#17102a;--gold:#ffd34d;--gold2:#ffb62e;--text:#fff;--muted:#b9afc9}
 body{margin:0;background:linear-gradient(180deg,#24113f,#10061f 55%,#090411);color:var(--text);font-family:Arial,"Noto Sans Bengali",sans-serif;min-height:100vh}
 button,input,select{font:inherit}
 button{cursor:pointer}
@@ -112,13 +112,13 @@ input:focus,select:focus{border-color:var(--gold)}
 <button class="card secondary" onclick="showPage('earn')">
 <div style="font-size:35px">💰</div>
 <h3>Earn</h3>
-<div class="muted small">All earning tasks</div>
+<div class="muted small">Website • Video • App • Custom</div>
 </button>
 
 <button class="card secondary" onclick="showPage('video')">
 <div style="font-size:35px">🎬</div>
 <h3>ভিডিও দেখে ইনকাম</h3>
-<div class="muted small">Video দেখুন • Reward নিন</div>
+<div class="muted small">আপনার দেওয়া ভিডিও • Reward</div>
 </button>
 
 <button class="card secondary" onclick="showPage('withdraw')">
@@ -136,19 +136,19 @@ input:focus,select:focus{border-color:var(--gold)}
 <button class="card secondary" onclick="showPage('leaderboard')">
 <div style="font-size:35px">🏆</div>
 <h3>Leaderboard</h3>
-<div class="muted small">Real activated users</div>
+<div class="muted small">Activated users</div>
 </button>
 
 <button class="card secondary" onclick="showPage('earn')">
 <div style="font-size:35px">🎁</div>
 <h3>Daily Check-in</h3>
-<div class="muted small">Open Earn • Daily reward</div>
+<div class="muted small">Daily reward</div>
 </button>
 
 <button class="card secondary" onclick="showPage('earn')">
 <div style="font-size:35px">🎡</div>
-<h3>Spin</h3>
-<div class="muted small">Open Earn • Daily reward</div>
+<h3>Daily Spin</h3>
+<div class="muted small">Daily reward</div>
 </button>
 
 <button class="card secondary" onclick="showPage('history')">
@@ -177,8 +177,10 @@ input:focus,select:focus{border-color:var(--gold)}
 <div class="back" onclick="showPage('home')">← Home</div>
 
 <div class="card">
-<h2>Earn</h2>
-<p class="muted">Admin Panel থেকে যোগ করা active task এখানে automatically আসবে। এছাড়া Daily Check-in ও Spin প্রতিদিন server-side reward দেয়।</p>
+<h2>💰 Earn</h2>
+<p class="muted">
+Admin Panel থেকে আপনার নিজের Video, Website, App বা অন্য Promotion Task যোগ করলে এখানে automatically দেখা যাবে।
+</p>
 
 <div id="earnStatus" class="status"></div>
 
@@ -198,7 +200,17 @@ input:focus,select:focus{border-color:var(--gold)}
 
 <div class="card">
 <h2>🎬 ভিডিও দেখে ইনকাম</h2>
-<p class="muted">Admin Panel থেকে যোগ করা active video task এখানে দেখা যাবে। ভিডিও খুলে নির্ধারিত সময় অপেক্ষা করলে reward claim করার সুযোগ থাকবে।</p>
+
+<p class="muted">
+আপনি Admin Panel থেকে যে promotional video link দেবেন, সেগুলো এখানে দেখা যাবে।
+ভিডিও খুলে নির্ধারিত সময় অপেক্ষা করে task complete করলে reward claim করা যাবে।
+</p>
+
+<div class="info">
+<b>📢 নিয়ম:</b><br>
+শুধু Admin-এর দেওয়া promotional video task এখানে থাকবে।
+</div>
+
 <div id="videoStatus" class="status"></div>
 </div>
 
@@ -211,12 +223,17 @@ input:focus,select:focus{border-color:var(--gold)}
 <div class="back" onclick="showPage('home')">← Home</div>
 
 <div class="card">
-<h2>Withdraw</h2>
-<p class="muted">Minimum ৳100 • Maximum ৳5,000</p>
+
+<h2>💸 Withdraw</h2>
+
+<p class="muted">
+Minimum ৳100 • Maximum ৳5,000
+</p>
 
 <div id="withdrawStatus" class="status"></div>
 
 <label>Method</label>
+
 <select id="withdrawMethod">
 <option value="bkash">bKash</option>
 <option value="nagad">Nagad</option>
@@ -228,11 +245,15 @@ input:focus,select:focus{border-color:var(--gold)}
 <label>Amount (৳)</label>
 <input id="withdrawAmount" type="number" min="100" max="5000" step="1" placeholder="100">
 
-<button class="btn primary" onclick="submitWithdraw()">Withdraw Request</button>
+<button class="btn primary" onclick="submitWithdraw()">
+Withdraw Request
+</button>
 
 <div class="info">
-Request Admin review করবে। Approved হলে backend balance থেকে amount deduct করবে।
+Request Admin review করবে।
+Approved হলে backend balance থেকে amount deduct করবে।
 </div>
+
 </div>
 
 <div class="card">
@@ -247,7 +268,8 @@ Request Admin review করবে। Approved হলে backend balance থে�
 <div class="back" onclick="showPage('home')">← Home</div>
 
 <div class="card">
-<h2>Refer & Earn</h2>
+
+<h2>👥 Refer & Earn</h2>
 
 <p class="muted">
 আপনার referral code দিয়ে নতুন user এলে এবং referral সফলভাবে যাচাই/activation হলে ৳30 bonus প্রযোজ্য।
@@ -256,14 +278,19 @@ Request Admin review করবে। Approved হলে backend balance থে�
 <div id="refCode" class="codebox">—</div>
 
 <div style="margin-top:12px">
-<button class="btn primary" onclick="copyReferral()">📋 Copy Referral Code</button>
+<button class="btn primary" onclick="copyReferral()">
+📋 Copy Referral Code
+</button>
 </div>
 
 <div style="margin-top:10px">
-<button class="btn secondary" onclick="shareReferral()">📤 Share Referral</button>
+<button class="btn secondary" onclick="shareReferral()">
+📤 Share Referral
+</button>
 </div>
 
 <div id="referStatus" class="status"></div>
+
 </div>
 
 <div class="card">
@@ -278,9 +305,15 @@ Request Admin review করবে। Approved হলে backend balance থে�
 <div class="back" onclick="showPage('home')">← Home</div>
 
 <div class="card">
+
 <h2>🏆 Leaderboard</h2>
-<p class="muted">Activated users-এর real backend balance অনুযায়ী ranking।</p>
+
+<p class="muted">
+Activated users-এর backend balance অনুযায়ী ranking।
+</p>
+
 <div id="leaderboardList"></div>
+
 </div>
 
 </main>
@@ -290,8 +323,11 @@ Request Admin review করবে। Approved হলে backend balance থে�
 <div class="back" onclick="showPage('home')">← Home</div>
 
 <div class="card">
+
 <h2>📊 Earning History</h2>
+
 <div id="historyList"></div>
+
 </div>
 
 </main>
@@ -301,8 +337,11 @@ Request Admin review করবে। Approved হলে backend balance থে�
 <div class="back" onclick="showPage('home')">← Home</div>
 
 <div class="card">
+
 <h2>👤 Profile</h2>
+
 <div id="profileInfo"></div>
+
 </div>
 
 </main>
@@ -312,10 +351,11 @@ Request Admin review করবে। Approved হলে backend balance থে�
 <div class="back" onclick="showPage('home')">← Home</div>
 
 <div class="card">
+
 <h2>💬 Support</h2>
 
 <p class="muted">
-CashBD support-এর জন্য Telegram bot-এ message পাঠান।
+CashBD support-এর জন্য Telegram-এ message পাঠান।
 </p>
 
 <button class="btn primary" onclick="openSupport()">
@@ -325,6 +365,7 @@ Open Telegram Support
 <div class="info">
 Payment বা withdrawal সংক্রান্ত বিষয়ে Transaction ID/Request details সংরক্ষণ করে রাখুন।
 </div>
+
 </div>
 
 </main>
@@ -335,16 +376,18 @@ Payment বা withdrawal সংক্রান্ত বিষয়ে Transactio
 
 <div class="card">
 
-<h2>Account Activation</h2>
+<h2>⚡ Account Activation</h2>
 
 <p class="muted">
-Activation fee: <b style="color:var(--gold)">৳110</b>
+Activation fee:
+<b style="color:var(--gold)">৳110</b>
 </p>
 
 <div class="info">
 <b>bKash:</b> 01935654366<br>
-<b>Nagad:</b> 01873570387<br>
-Send Money গ্রহণযোগ্য। Mobile Recharge গ্রহণযোগ্য নয়।
+<b>Nagad:</b> 01873570387<br><br>
+<b>Send Money গ্রহণযোগ্য।</b><br>
+Mobile Recharge গ্রহণযোগ্য নয়।
 </div>
 
 <div id="activationStatus" class="status"></div>
@@ -365,7 +408,8 @@ Submit Activation Request
 </button>
 
 <div class="info small">
-Payment করার পর সঠিক Transaction ID দিন। Admin যাচাই করে approve করলে account activated হবে।
+Payment করার পর সঠিক Transaction ID দিন।
+Admin যাচাই করে approve করলে account activated হবে।
 </div>
 
 </div>
@@ -406,14 +450,11 @@ Payment করার পর সঠিক Transaction ID দিন। Admin য�
 
 const API="https://tnjaxkdthrxucyglaljf.supabase.co/functions/v1/cashbd-api";
 
-const tg=window.Telegram&&window.Telegram.WebApp?window.Telegram.WebApp:null;
+const tg=window.Telegram&&window.Telegram.WebApp
+?window.Telegram.WebApp:null;
 
 let initData="";
-
-let state={
-user:null,
-is_admin:false
-};
+let state={user:null,is_admin:false};
 
 if(tg){
 tg.ready();
@@ -511,24 +552,26 @@ const u=state.user;
 
 if(!u)return;
 
-document.getElementById("balance").textContent=
-money(u.balance);
+document.getElementById("balance")
+.textContent=money(u.balance);
 
-document.getElementById("userName").textContent=
-u.full_name||"Telegram User";
+document.getElementById("userName")
+.textContent=u.full_name||"Telegram User";
 
-document.getElementById("refCode").textContent=
-u.referral_code||"—";
+document.getElementById("refCode")
+.textContent=u.referral_code||"—";
 
-document.getElementById("accountBadge").textContent=
-u.is_activated?"Activated":"Not Activated";
+document.getElementById("accountBadge")
+.textContent=u.is_activated
+?"Activated"
+:"Not Activated";
 
 document.getElementById("activationBox").innerHTML=
 u.is_activated
 ?
-'<div class="info" style="border-color:#2eaa6d">✅ Account activated — eligible earning features চালু আছে।</div>'
+'<div class="info" style="border-color:#2eaa6d">✅ Account activated — earning features চালু আছে।</div>'
 :
-'<div class="info">🔒 Account activation প্রয়োজন। <b style="color:var(--gold)">৳110</b> payment verify হওয়ার পর eligible features চালু হবে।</div><button class="btn primary" style="margin-top:11px" onclick="showPage(\'activation\')">Activate Account</button>';
+'<div class="info">🔒 Account activation প্রয়োজন। <b style="color:var(--gold)">৳110</b> payment verify হওয়ার পর earning features চালু হবে।</div><button class="btn primary" style="margin-top:11px" onclick="showPage(\'activation\')">Activate Account</button>';
 
 renderProfile();
 
@@ -548,7 +591,8 @@ updateUI();
 
 }catch(e){
 
-document.getElementById("accountBadge").textContent="Error";
+document.getElementById("accountBadge")
+.textContent="Error";
 
 setStatus("earnStatus",e.message);
 
@@ -571,7 +615,7 @@ const tasks=d.tasks||[];
 if(!tasks.length){
 
 box.innerHTML=
-'<div class="empty">এখন কোনো active task নেই। Admin Panel থেকে task যোগ করলে এখানে দেখা যাবে।</div>';
+'<div class="empty">এখন কোনো active promotion task নেই। Admin Panel থেকে Video, Website বা App task যোগ করুন।</div>';
 
 return;
 
@@ -579,21 +623,19 @@ return;
 
 box.innerHTML=tasks.map(t=>{
 
-const type=String(
-t.task_type||"custom"
-).toLowerCase();
+const type=String(t.task_type||"custom").toLowerCase();
 
 const icon=
 type==="website"?"🌐":
-type==="video"?"▶️":
+type==="video"?"🎬":
 type==="app"?"📱":
 "⭐";
 
 const label=
-type==="website"?"Visit & Earn":
-type==="video"?"Watch & Earn":
-type==="app"?"Open App & Earn":
-"Complete Task";
+type==="website"?"🌐 Website Visit & Earn":
+type==="video"?"🎬 Video Promotion & Earn":
+type==="app"?"📱 App Promotion & Earn":
+"⭐ Complete Task";
 
 return `
 <div class="card task">
@@ -603,7 +645,7 @@ return `
 <h3>${esc(t.title)}</h3>
 
 <div class="muted">
-${esc(t.description||"Task complete করুন।")}
+${esc(t.description||"Promotion task complete করুন।")}
 </div>
 
 <div class="reward">
@@ -617,7 +659,9 @@ ${JSON.stringify(t.target_url||"")},
 ${JSON.stringify(type)},
 ${JSON.stringify(t.title||"Task")}
 )">
+
 ${label}
+
 </button>
 
 </div>
@@ -627,8 +671,7 @@ ${label}
 
 }catch(e){
 
-box.innerHTML=
-`<div class="empty">${esc(e.message)}</div>`;
+box.innerHTML=`<div class="empty">${esc(e.message)}</div>`;
 
 }
 
@@ -639,21 +682,19 @@ async function loadVideoTasks(){
 const box=document.getElementById("videoTasksList");
 
 box.innerHTML=
-'<div class="empty">Video tasks loading…</div>';
+'<div class="empty">Video promotion tasks loading…</div>';
 
 try{
 
 const d=await api("tasks");
 
 const tasks=(d.tasks||[])
-.filter(t=>
-String(t.task_type||"").toLowerCase()==="video"
-);
+.filter(t=>String(t.task_type||"").toLowerCase()==="video");
 
 if(!tasks.length){
 
 box.innerHTML=
-'<div class="empty">এখন কোনো active video task নেই। Admin Panel থেকে Video task যোগ করুন।</div>';
+'<div class="empty">এখন কোনো active video promotion task নেই। Admin Panel থেকে Video task যোগ করুন।</div>';
 
 return;
 
@@ -668,10 +709,7 @@ box.innerHTML=tasks.map(t=>`
 <h3>${esc(t.title)}</h3>
 
 <div class="muted">
-${esc(
-t.description||
-"ভিডিও দেখুন এবং task সম্পূর্ণ করুন।"
-)}
+${esc(t.description||"ভিডিও দেখুন এবং promotion task সম্পূর্ণ করুন।")}
 </div>
 
 <div class="reward">
@@ -684,7 +722,9 @@ ${JSON.stringify(t.id)},
 ${JSON.stringify(t.target_url||"")},
 ${JSON.stringify(t.title||"Video Task")}
 )">
+
 ▶️ ভিডিও দেখুন ও ইনকাম করুন
+
 </button>
 
 </div>
@@ -693,8 +733,7 @@ ${JSON.stringify(t.title||"Video Task")}
 
 }catch(e){
 
-box.innerHTML=
-`<div class="empty">${esc(e.message)}</div>`;
+box.innerHTML=`<div class="empty">${esc(e.message)}</div>`;
 
 }
 
@@ -728,22 +767,18 @@ window.open(url,"_blank");
 }
 
 if(!confirm(
-`${title}\n\nভিডিওটি খুলে অন্তত 10 সেকেন্ড অপেক্ষা করে OK চাপুন।`
-))
-return;
+`${title}
 
-await new Promise(
-r=>setTimeout(r,10000)
-);
+ভিডিওটি খুলে অন্তত 10 সেকেন্ড অপেক্ষা করে OK চাপুন।`
+))return;
+
+await new Promise(r=>setTimeout(r,10000));
 
 try{
 
-const d=await api(
-"complete_task",
-{
+const d=await api("complete_task",{
 task_id:id
-}
-);
+});
 
 state.user=d.user;
 
@@ -759,10 +794,7 @@ await loadVideoTasks();
 
 }catch(e){
 
-setStatus(
-"videoStatus",
-e.message
-);
+setStatus("videoStatus",e.message);
 
 }
 
@@ -798,12 +830,15 @@ window.open(url,"_blank");
 const seconds=
 (type==="website"||
 type==="video"||
-type==="app")?10:3;
+type==="app")
+?10
+:3;
 
 if(!confirm(
-`${title}\n\n${seconds} সেকেন্ড অপেক্ষা করে reward claim করুন।`
-))
-return;
+`${title}
+
+${seconds} সেকেন্ড অপেক্ষা করে reward claim করুন।`
+))return;
 
 await new Promise(
 r=>setTimeout(r,seconds*1000)
@@ -811,12 +846,9 @@ r=>setTimeout(r,seconds*1000)
 
 try{
 
-const d=await api(
-"complete_task",
-{
+const d=await api("complete_task",{
 task_id:id
-}
-);
+});
 
 state.user=d.user;
 
@@ -832,10 +864,7 @@ await loadTasks();
 
 }catch(e){
 
-setStatus(
-"earnStatus",
-e.message
-);
+setStatus("earnStatus",e.message);
 
 }
 
@@ -867,10 +896,7 @@ true
 
 }catch(e){
 
-setStatus(
-"earnStatus",
-e.message
-);
+setStatus("earnStatus",e.message);
 
 }
 
@@ -902,10 +928,7 @@ true
 
 }catch(e){
 
-setStatus(
-"earnStatus",
-e.message
-);
+setStatus("earnStatus",e.message);
 
 }
 
@@ -914,14 +937,11 @@ e.message
 async function submitActivation(){
 
 const method=
-document.getElementById(
-"activationMethod"
-).value;
+document.getElementById("activationMethod").value;
 
 const transaction_id=
-document.getElementById(
-"activationTxn"
-).value.trim();
+document.getElementById("activationTxn")
+.value.trim();
 
 if(!transaction_id){
 
@@ -936,13 +956,10 @@ return;
 
 try{
 
-const d=await api(
-"activate",
-{
+const d=await api("activate",{
 method,
 transaction_id
-}
-);
+});
 
 setStatus(
 "activationStatus",
@@ -950,9 +967,8 @@ d.message||"Request submitted",
 true
 );
 
-document.getElementById(
-"activationTxn"
-).value="";
+document.getElementById("activationTxn")
+.value="";
 
 }catch(e){
 
@@ -976,20 +992,15 @@ return;
 }
 
 const method=
-document.getElementById(
-"withdrawMethod"
-).value;
+document.getElementById("withdrawMethod").value;
 
 const phone=
-document.getElementById(
-"withdrawPhone"
-).value.trim();
+document.getElementById("withdrawPhone")
+.value.trim();
 
 const amount=
 Number(
-document.getElementById(
-"withdrawAmount"
-).value
+document.getElementById("withdrawAmount").value
 );
 
 if(!/^01[3-9]\d{8}$/.test(phone)){
@@ -1034,14 +1045,11 @@ return;
 
 try{
 
-const d=await api(
-"withdraw",
-{
+const d=await api("withdraw",{
 method,
 phone_number:phone,
 amount
-}
-);
+});
 
 setStatus(
 "withdrawStatus",
@@ -1049,13 +1057,11 @@ d.message||"Request submitted",
 true
 );
 
-document.getElementById(
-"withdrawPhone"
-).value="";
+document.getElementById("withdrawPhone")
+.value="";
 
-document.getElementById(
-"withdrawAmount"
-).value="";
+document.getElementById("withdrawAmount")
+.value="";
 
 loadWithdrawalHistory();
 
@@ -1105,11 +1111,15 @@ const bot=
 "https://t.me/CashBD_ManiBot";
 
 const url=
-`https://t.me/share/url?url=${encodeURIComponent(bot)}&text=${encodeURIComponent("CashBD-তে join করুন। Referral Code: "+code)}`;
-
-if(
-tg&&tg.openTelegramLink
+`https://t.me/share/url?url=${
+encodeURIComponent(bot)
+}&text=${
+encodeURIComponent(
+"CashBD-তে join করুন। Referral Code: "+code
 )
+}`;
+
+if(tg&&tg.openTelegramLink)
 tg.openTelegramLink(url);
 else
 window.open(url,"_blank");
@@ -1119,41 +1129,32 @@ window.open(url,"_blank");
 async function loadLeaderboard(){
 
 const box=
-document.getElementById(
-"leaderboardList"
-);
+document.getElementById("leaderboardList");
 
 box.innerHTML=
 '<div class="empty">Loading…</div>';
 
 try{
 
-const d=
-await api("leaderboard");
+const d=await api("leaderboard");
 
-const rows=
-d.leaderboard||[];
+const rows=d.leaderboard||[];
 
-box.innerHTML=
-rows.length
-?
+box.innerHTML=rows.length?
+
 rows.map((u,i)=>`
 
 <div class="rank">
 
-<div class="pos">
-#${i+1}
-</div>
+<div class="pos">#${i+1}</div>
 
-<div class="avatar">
-👤
-</div>
+<div class="avatar">👤</div>
 
 <div class="rankname">
 ${esc(
-u.username?
-"@"+u.username:
-(u.full_name||"User")
+u.username
+?"@"+u.username
+:(u.full_name||"User")
 )}
 </div>
 
@@ -1164,7 +1165,9 @@ ${money(u.balance)}
 </div>
 
 `).join("")
+
 :
+
 '<div class="empty">এখনো কোনো activated user নেই।</div>';
 
 }catch(e){
@@ -1179,60 +1182,47 @@ box.innerHTML=
 async function loadHistory(){
 
 const box=
-document.getElementById(
-"historyList"
-);
+document.getElementById("historyList");
 
 box.innerHTML=
 '<div class="empty">Loading…</div>';
 
 try{
 
-const d=
-await api("history");
+const d=await api("history");
 
-const rows=
-d.history||[];
+const rows=d.history||[];
 
-box.innerHTML=
-rows.length
-?
+box.innerHTML=rows.length?
+
 rows.map(x=>`
 
 <div class="item">
 
 <div class="itemtop">
 
-<b>
-${esc(
-x.description||x.type
-)}
-</b>
+<b>${esc(x.description||x.type)}</b>
 
 <span class="money">
-
-${
-Number(x.amount)>=0?"+":""
-}${money(x.amount)}
-
+${Number(x.amount)>=0?"+":""}
+${money(x.amount)}
 </span>
 
 </div>
 
 <div class="muted small">
-
 ${esc(
-new Date(
-x.created_at
-).toLocaleString("en-GB")
+new Date(x.created_at)
+.toLocaleString("en-GB")
 )}
-
 </div>
 
 </div>
 
 `).join("")
+
 :
+
 '<div class="empty">কোনো transaction নেই।</div>';
 
 }catch(e){
@@ -1247,24 +1237,19 @@ box.innerHTML=
 async function loadReferralHistory(){
 
 const box=
-document.getElementById(
-"referralHistory"
-);
+document.getElementById("referralHistory");
 
 box.innerHTML=
 '<div class="empty">Loading…</div>';
 
 try{
 
-const d=
-await api("referral_history");
+const d=await api("referral_history");
 
-const rows=
-d.referrals||[];
+const rows=d.referrals||[];
 
-box.innerHTML=
-rows.length
-?
+box.innerHTML=rows.length?
+
 rows.map(x=>`
 
 <div class="item">
@@ -1274,34 +1259,30 @@ rows.map(x=>`
 <b>Referral</b>
 
 <span class="money">
-
 ${
 x.status==="successful"
 ?"+৳30.00"
 :"৳0.00"
 }
-
 </span>
 
 </div>
 
 <div class="muted small">
-
-Status:
-${esc(x.status||"pending")}
+Status: ${esc(x.status||"pending")}
 •
 ${esc(
-new Date(
-x.created_at
-).toLocaleString("en-GB")
+new Date(x.created_at)
+.toLocaleString("en-GB")
 )}
-
 </div>
 
 </div>
 
 `).join("")
+
 :
+
 '<div class="empty">এখনো referral history নেই।</div>';
 
 }catch(e){
@@ -1316,9 +1297,7 @@ box.innerHTML=
 async function loadWithdrawalHistory(){
 
 const box=
-document.getElementById(
-"withdrawalHistory"
-);
+document.getElementById("withdrawalHistory");
 
 if(!box)return;
 
@@ -1327,15 +1306,12 @@ box.innerHTML=
 
 try{
 
-const d=
-await api("withdrawal_history");
+const d=await api("withdrawal_history");
 
-const rows=
-d.withdrawals||[];
+const rows=d.withdrawals||[];
 
-box.innerHTML=
-rows.length
-?
+box.innerHTML=rows.length?
+
 rows.map(x=>`
 
 <div class="item">
@@ -1355,22 +1331,20 @@ ${esc(x.phone_number||"")}
 </div>
 
 <div class="muted small">
-
-Status:
-${esc(x.status||"pending")}
+Status: ${esc(x.status||"pending")}
 •
 ${esc(
-new Date(
-x.created_at
-).toLocaleString("en-GB")
+new Date(x.created_at)
+.toLocaleString("en-GB")
 )}
-
 </div>
 
 </div>
 
 `).join("")
+
 :
+
 '<div class="empty">কোনো withdrawal history নেই।</div>';
 
 }catch(e){
@@ -1388,64 +1362,44 @@ const u=state.user;
 
 if(!u)return;
 
-document.getElementById(
-"profileInfo"
-).innerHTML=`
+document.getElementById("profileInfo")
+.innerHTML=`
 
 <div class="item">
-
 <b>Name</b>
-
 <div class="muted">
 ${esc(u.full_name||"-")}
 </div>
-
 </div>
 
 <div class="item">
-
 <b>Username</b>
-
 <div class="muted">
-${esc(
-u.username?
-"@"+u.username:
-"-"
-)}
+${esc(u.username?"@"+u.username:"-")}
 </div>
-
 </div>
 
 <div class="item">
-
 <b>Telegram ID</b>
-
 <div class="muted">
 ${esc(u.telegram_id)}
 </div>
-
 </div>
 
 <div class="item">
-
 <b>Referral Code</b>
-
 <div class="muted">
 ${esc(u.referral_code)}
 </div>
-
 </div>
 
 <div class="item">
-
 <b>Status</b>
-
 <div class="muted">
-${u.is_activated?
-"Activated":
-"Not Activated"}
+${u.is_activated
+?"Activated"
+:"Not Activated"}
 </div>
-
 </div>
 
 `;
@@ -1457,9 +1411,7 @@ function openSupport(){
 const u=
 "https://t.me/CashBD_ManiBot";
 
-if(
-tg&&tg.openTelegramLink
-)
+if(tg&&tg.openTelegramLink)
 tg.openTelegramLink(u);
 else
 window.open(u,"_blank");
@@ -1470,14 +1422,11 @@ window.open(u,"_blank");
 
 if(!tg||!initData){
 
-document.getElementById(
-"accountBadge"
-).textContent=
-"Telegram Only";
+document.getElementById("accountBadge")
+.textContent="Telegram Only";
 
-document.getElementById(
-"userName"
-).textContent=
+document.getElementById("userName")
+.textContent=
 "Telegram Mini App-এর ভিতর খুলুন";
 
 return;
