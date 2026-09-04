@@ -74,6 +74,7 @@ input:focus,select:focus{border-color:var(--gold)}
 </head>
 
 <body>
+
 <div id="app">
 
 <div class="top">
@@ -97,9 +98,7 @@ input:focus,select:focus{border-color:var(--gold)}
 
 <div class="card">
 <h2>CashBD</h2>
-<p class="muted">
-Tasks, daily bonus এবং approved earning activities থেকে সরাসরি ৳ balance তৈরি করুন।
-</p>
+<p class="muted">Tasks, daily bonus এবং approved earning activities থেকে সরাসরি ৳ balance তৈরি করুন।</p>
 <div id="activationBox"></div>
 </div>
 
@@ -168,11 +167,13 @@ Tasks, daily bonus এবং approved earning activities থেকে সরা�
 </div>
 </main>
 
+
 <main id="earn" class="page hidden">
 
 <div class="back" onclick="showPage('home')">← Home</div>
 
 <div class="card">
+
 <h2>Earn</h2>
 
 <p class="muted">
@@ -183,8 +184,15 @@ Admin Panel থেকে যোগ করা active task এখানে automat
 <div id="earnStatus" class="status"></div>
 
 <div class="row">
-<button class="btn primary" onclick="dailyCheckin()">🎁 Daily Check-in</button>
-<button class="btn secondary" onclick="spin()">🎡 Spin</button>
+
+<button class="btn primary" onclick="dailyCheckin()">
+🎁 Daily Check-in
+</button>
+
+<button class="btn secondary" onclick="spin()">
+🎡 Spin
+</button>
+
 </div>
 </div>
 
@@ -193,6 +201,7 @@ Admin Panel থেকে যোগ করা active task এখানে automat
 <div id="tasksList"></div>
 
 </main>
+
 
 <main id="withdraw" class="page hidden">
 
@@ -209,23 +218,38 @@ Minimum ৳100 • Maximum ৳5,000
 <div id="withdrawStatus" class="status"></div>
 
 <label>Method</label>
+
 <select id="withdrawMethod">
 <option value="bkash">bKash</option>
 <option value="nagad">Nagad</option>
 </select>
 
 <label>bKash/Nagad Number</label>
-<input id="withdrawPhone" inputmode="numeric" placeholder="01XXXXXXXXX">
+
+<input
+id="withdrawPhone"
+inputmode="numeric"
+placeholder="01XXXXXXXXX"
+>
 
 <label>Amount (৳)</label>
-<input id="withdrawAmount" type="number" min="100" max="5000" step="1" placeholder="100">
+
+<input
+id="withdrawAmount"
+type="number"
+min="100"
+max="5000"
+step="1"
+placeholder="100"
+>
 
 <button class="btn primary" onclick="submitWithdraw()">
 Withdraw Request
 </button>
 
 <div class="info">
-Request Admin review করবে। Approved হলে backend balance থেকে amount deduct করবে।
+Request Admin review করবে।
+Approved হলে backend balance থেকে amount deduct করবে।
 </div>
 
 </div>
@@ -236,6 +260,7 @@ Request Admin review করবে। Approved হলে backend balance থে�
 </div>
 
 </main>
+
 
 <main id="refer" class="page hidden">
 
@@ -274,6 +299,7 @@ Request Admin review করবে। Approved হলে backend balance থে�
 
 </main>
 
+
 <main id="leaderboard" class="page hidden">
 
 <div class="back" onclick="showPage('home')">← Home</div>
@@ -292,6 +318,7 @@ Activated users-এর real backend balance অনুযায়ী ranking।
 
 </main>
 
+
 <main id="history" class="page hidden">
 
 <div class="back" onclick="showPage('home')">← Home</div>
@@ -306,6 +333,7 @@ Activated users-এর real backend balance অনুযায়ী ranking।
 
 </main>
 
+
 <main id="profile" class="page hidden">
 
 <div class="back" onclick="showPage('home')">← Home</div>
@@ -319,6 +347,7 @@ Activated users-এর real backend balance অনুযায়ী ranking।
 </div>
 
 </main>
+
 
 <main id="support" class="page hidden">
 
@@ -344,6 +373,7 @@ Payment বা withdrawal সংক্রান্ত বিষয়ে Transactio
 
 </main>
 
+
 <main id="activation" class="page hidden">
 
 <div class="back" onclick="showPage('home')">← Home</div>
@@ -353,13 +383,21 @@ Payment বা withdrawal সংক্রান্ত বিষয়ে Transactio
 <h2>Account Activation</h2>
 
 <p class="muted">
-Activation fee: <b style="color:var(--gold)">৳110</b>
+Activation fee:
+<b style="color:var(--gold)">৳110</b>
 </p>
 
 <div class="info">
-<b>bKash:</b> 01935654366<br>
-<b>Nagad:</b> 01873570387<br>
-Send Money গ্রহণযোগ্য। Mobile Recharge গ্রহণযোগ্য নয়।
+
+<b>bKash:</b> 01935654366
+<br>
+
+<b>Nagad:</b> 01873570387
+<br>
+
+Send Money গ্রহণযোগ্য।
+Mobile Recharge গ্রহণযোগ্য নয়।
+
 </div>
 
 <div id="activationStatus" class="status"></div>
@@ -373,19 +411,25 @@ Send Money গ্রহণযোগ্য। Mobile Recharge গ্রহণয�
 
 <label>Transaction ID</label>
 
-<input id="activationTxn" autocomplete="off" placeholder="Transaction ID লিখুন">
+<input
+id="activationTxn"
+autocomplete="off"
+placeholder="Transaction ID লিখুন"
+>
 
 <button class="btn primary" onclick="submitActivation()">
 Submit Activation Request
 </button>
 
 <div class="info small">
-Payment করার পর সঠিক Transaction ID দিন। Admin যাচাই করে approve করলে account activated হবে।
+Payment করার পর সঠিক Transaction ID দিন।
+Admin যাচাই করে approve করলে account activated হবে।
 </div>
 
 </div>
 
 </main>
+
 
 <div class="bottom">
 
@@ -417,14 +461,22 @@ Payment করার পর সঠিক Transaction ID দিন। Admin য�
 
 </div>
 
+
 <script>
 
 const API="https://tnjaxkdthrxucyglaljf.supabase.co/functions/v1/cashbd-api";
 
-const tg=window.Telegram&&window.Telegram.WebApp?window.Telegram.WebApp:null;
+const tg=
+window.Telegram&&window.Telegram.WebApp
+?window.Telegram.WebApp
+:null;
 
 let initData="";
-let state={user:null,is_admin:false};
+
+let state={
+user:null,
+is_admin:false
+};
 
 if(tg){
 tg.ready();
@@ -432,15 +484,20 @@ tg.expand();
 initData=tg.initData||"";
 }
 
-const esc=v=>String(v??"").replace(/[&<>"']/g,m=>({
+const esc=v=>
+String(v??"").replace(
+/[&<>"']/g,
+m=>({
 "&":"&amp;",
 "<":"&lt;",
 ">":"&gt;",
 '"':"&quot;",
 "'":"&#039;"
-}[m]));
+}[m])
+);
 
-const money=v=>"৳"+Number(v||0).toFixed(2);
+const money=v=>
+"৳"+Number(v||0).toFixed(2);
 
 function setStatus(id,msg,ok=false){
 
@@ -454,12 +511,15 @@ e.className="status "+(ok?"ok":"err");
 
 }
 
+
 async function api(action,extra={}){
 
 if(!initData)
 throw Error("Telegram Mini App-এর ভিতর থেকে খুলুন।");
 
-const r=await fetch(API,{
+const r=await fetch(
+API,
+{
 method:"POST",
 headers:{
 "Content-Type":"application/json"
@@ -469,12 +529,16 @@ initData,
 action,
 ...extra
 })
-});
+}
+);
 
-const d=await r.json().catch(()=>({
+const d=
+await r.json().catch(
+()=>({
 success:false,
 message:"Invalid server response"
-}));
+})
+);
 
 if(!r.ok||d.success===false)
 throw Error(d.message||"Server error");
@@ -483,35 +547,49 @@ return d;
 
 }
 
+
 function showPage(name){
 
-document.querySelectorAll("main.page")
+document
+.querySelectorAll("main.page")
 .forEach(x=>x.classList.add("hidden"));
 
 const p=document.getElementById(name);
 
 if(p)p.classList.remove("hidden");
 
-document.querySelectorAll(".nav button")
-.forEach(x=>
-x.classList.toggle("active",x.dataset.page===name)
+document
+.querySelectorAll(".nav button")
+.forEach(
+x=>x.classList.toggle(
+"active",
+x.dataset.page===name
+)
 );
 
-if(name==="home")refreshMe();
+if(name==="home")
+refreshMe();
 
-if(name==="earn")loadTasks();
+if(name==="earn")
+loadTasks();
 
-if(name==="leaderboard")loadLeaderboard();
+if(name==="leaderboard")
+loadLeaderboard();
 
-if(name==="history")loadHistory();
+if(name==="history")
+loadHistory();
 
-if(name==="refer")loadReferralHistory();
+if(name==="refer")
+loadReferralHistory();
 
-if(name==="withdraw")loadWithdrawalHistory();
+if(name==="withdraw")
+loadWithdrawalHistory();
 
-if(name==="profile")renderProfile();
+if(name==="profile")
+renderProfile();
 
 }
+
 
 function updateUI(){
 
@@ -519,7 +597,8 @@ const u=state.user;
 
 if(!u)return;
 
-document.getElementById("balance").textContent=money(u.balance);
+document.getElementById("balance").textContent=
+money(u.balance);
 
 document.getElementById("userName").textContent=
 u.full_name||"Telegram User";
@@ -528,23 +607,21 @@ document.getElementById("refCode").textContent=
 u.referral_code||"—";
 
 document.getElementById("accountBadge").textContent=
-u.is_activated?"Activated":"Not Activated";
+u.is_activated
+?"Activated"
+:"Not Activated";
 
 document.getElementById("activationBox").innerHTML=
-
 u.is_activated
-
 ?
-
 '<div class="info" style="border-color:#2eaa6d">✅ Account activated — eligible earning features চালু আছে।</div>'
-
 :
-
 '<div class="info">🔒 Account activation প্রয়োজন। <b style="color:var(--gold)">৳110</b> payment verify হওয়ার পর eligible features চালু হবে।</div><button class="btn primary" style="margin-top:11px" onclick="showPage(\'activation\')">Activate Account</button>';
 
 renderProfile();
 
 }
+
 
 async function refreshMe(){
 
@@ -568,11 +645,13 @@ setStatus("earnStatus",e.message);
 
 }
 
+
 async function loadTasks(){
 
 const box=document.getElementById("tasksList");
 
-box.innerHTML='<div class="empty">Tasks loading…</div>';
+box.innerHTML=
+'<div class="empty">Tasks loading…</div>';
 
 try{
 
@@ -589,23 +668,33 @@ return;
 
 }
 
-box.innerHTML=tasks.map(t=>{
+box.innerHTML=
+tasks.map(
+t=>{
 
-const type=String(t.task_type||"custom").toLowerCase();
+const type=
+String(t.task_type||"custom").toLowerCase();
 
 const icon=
-type==="website"?"🌐":
-type==="video"?"▶️":
-type==="app"?"📱":
-"⭐";
+type==="website"
+?"🌐"
+:type==="video"
+?"▶️"
+:type==="app"
+?"📱"
+:"⭐";
 
 const label=
-type==="website"?"Visit & Earn":
-type==="video"?"Watch & Earn":
-type==="app"?"Open App & Earn":
-"Complete Task";
+type==="website"
+?"Visit & Earn"
+:type==="video"
+?"Watch & Earn"
+:type==="app"
+?"Open App & Earn"
+:"Complete Task";
 
-return `<div class="card task">
+return `
+<div class="card task">
 
 <div class="ico">${icon}</div>
 
@@ -615,21 +704,27 @@ return `<div class="card task">
 ${esc(t.description||"Task complete করুন।")}
 </div>
 
-<div class="reward">${money(t.reward)}</div>
+<div class="reward">
+${money(t.reward)}
+</div>
 
-<button class="btn primary"
+<button
+class="btn primary"
 onclick="startTask(
 ${JSON.stringify(t.id)},
 ${JSON.stringify(t.target_url||"")},
 ${JSON.stringify(type)},
-${JSON.stringify(t.title||"Task")}
+${JSON.stringify(t.title||"Task")},
+${JSON.stringify(t.reward||0)}
 )">
 ${label}
 </button>
 
-</div>`;
+</div>
+`;
 
-}).join("");
+}
+).join("");
 
 }catch(e){
 
@@ -639,6 +734,7 @@ box.innerHTML=
 }
 
 }
+
 
 async function startTask(id,url,type,title,reward){
 
@@ -650,25 +746,190 @@ return;
 
 }
 
+url=String(url||"").trim();
+
+const kind=
+String(type||"custom").toLowerCase();
+
 const seconds=
-(type==="website"||type==="video"||type==="app")?10:3;
+(kind==="website"||kind==="video"||kind==="app")
+?10
+:3;
+
+if(!url){
 
 setStatus(
 "earnStatus",
-`⏳ ${title} চালু হচ্ছে… ${seconds} সেকেন্ড অপেক্ষা করুন।`
+"এই task-এর কোনো link সেট করা নেই।"
 );
 
-if(url){
+return;
+
+}
+
+setStatus(
+"earnStatus",
+`⏳ ${title} চালু হচ্ছে…`
+);
+
+const isTelegram=
+/^https?:\/\/(t\.me|telegram\.me)\//i.test(url);
+
+if(kind==="video"){
+
+const old=
+document.getElementById("cashbdVideoModal");
+
+if(old)old.remove();
+
+let embed=url;
+
+const m=
+url.match(
+/(?:youtube\.com\/(?:watch\?v=|shorts\/|embed\/)|youtu\.be\/)([A-Za-z0-9_-]{6,})/i
+);
+
+if(m){
+
+embed=
+"https://www.youtube.com/embed/"
++m[1]
++"?autoplay=1&rel=0";
+
+}
+
+const modal=
+document.createElement("div");
+
+modal.id="cashbdVideoModal";
+
+modal.style.cssText=
+"position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,.92);display:flex;align-items:center;justify-content:center;padding:14px;";
+
+modal.innerHTML=`
+
+<div style="
+width:100%;
+max-width:520px;
+background:#160d28;
+border:1px solid rgba(255,204,72,.45);
+border-radius:18px;
+padding:12px;
+box-sizing:border-box
+">
+
+<div style="
+display:flex;
+justify-content:space-between;
+align-items:center;
+color:#ffd447;
+font-weight:800;
+font-size:18px;
+margin:2px 4px 10px
+">
+
+<span>${esc(title)}</span>
+
+<button
+id="cashbdVideoClose"
+style="
+border:0;
+background:transparent;
+color:#fff;
+font-size:28px;
+line-height:1
+">
+×
+</button>
+
+</div>
+
+<div style="
+position:relative;
+width:100%;
+aspect-ratio:16/9;
+background:#000;
+border-radius:12px;
+overflow:hidden
+">
+
+<iframe
+src="${esc(embed)}"
+style="
+width:100%;
+height:100%;
+border:0
+"
+allow="autoplay; encrypted-media; picture-in-picture"
+allowfullscreen>
+</iframe>
+
+</div>
+
+<button
+id="cashbdVideoOpen"
+style="
+width:100%;
+margin-top:10px;
+padding:14px;
+border:0;
+border-radius:12px;
+background:#ffc83d;
+color:#111;
+font-weight:800;
+font-size:16px
+">
+▶️ ভিডিও বাইরে খুলুন
+</button>
+
+<div
+id="cashbdVideoTimer"
+style="
+text-align:center;
+color:#cfc6dc;
+padding:10px 0 2px
+">
+ভিডিও দেখে 10 সেকেন্ড অপেক্ষা করুন…
+</div>
+
+</div>
+`;
+
+document.body.appendChild(modal);
+
+document.getElementById(
+"cashbdVideoClose"
+).onclick=
+()=>modal.remove();
+
+document.getElementById(
+"cashbdVideoOpen"
+).onclick=()=>{
 
 try{
 
-if(tg&&typeof tg.openLink==="function"){
+if(
+isTelegram &&
+tg &&
+typeof tg.openTelegramLink==="function"
+){
+
+tg.openTelegramLink(url);
+
+}else if(
+tg &&
+typeof tg.openLink==="function"
+){
 
 tg.openLink(url);
 
 }else{
 
-window.open(url,"_blank","noopener,noreferrer");
+window.open(
+url,
+"_blank",
+"noopener,noreferrer"
+);
 
 }
 
@@ -676,7 +937,81 @@ window.open(url,"_blank","noopener,noreferrer");
 
 try{
 
-window.open(url,"_blank","noopener,noreferrer");
+window.open(
+url,
+"_blank",
+"noopener,noreferrer"
+);
+
+}catch(__){}
+
+}
+
+};
+
+let left=seconds;
+
+const timer=
+document.getElementById(
+"cashbdVideoTimer"
+);
+
+const iv=setInterval(()=>{
+
+left--;
+
+if(timer){
+
+timer.textContent=
+left>0
+?`ভিডিও দেখে আরও ${left} সেকেন্ড অপেক্ষা করুন…`
+:"সময় শেষ — Reward নেওয়া যাবে।";
+
+}
+
+if(left<=0)
+clearInterval(iv);
+
+},1000);
+
+}else{
+
+try{
+
+if(
+isTelegram &&
+tg &&
+typeof tg.openTelegramLink==="function"
+){
+
+tg.openTelegramLink(url);
+
+}else if(
+tg &&
+typeof tg.openLink==="function"
+){
+
+tg.openLink(url);
+
+}else{
+
+window.open(
+url,
+"_blank",
+"noopener,noreferrer"
+);
+
+}
+
+}catch(_){
+
+try{
+
+window.open(
+url,
+"_blank",
+"noopener,noreferrer"
+);
 
 }catch(__){}
 
@@ -684,13 +1019,21 @@ window.open(url,"_blank","noopener,noreferrer");
 
 }
 
-await new Promise(r=>setTimeout(r,seconds*1000));
+await new Promise(
+r=>setTimeout(
+r,
+seconds*1000
+)
+);
 
 try{
 
-const data=await api(
+const data=
+await api(
 "complete_task",
-{task_id:id}
+{
+task_id:id
+}
 );
 
 state.user=data.user;
@@ -699,11 +1042,19 @@ updateUI();
 
 setStatus(
 "earnStatus",
-data.message||(`${money(reward)} added.`),
+data.message||
+(`${money(reward)} added.`),
 true
 );
 
 await loadTasks();
+
+const m=
+document.getElementById(
+"cashbdVideoModal"
+);
+
+if(m)m.remove();
 
 }catch(e){
 
@@ -717,6 +1068,7 @@ false
 
 }
 
+
 async function dailyCheckin(){
 
 if(!state.user?.is_activated){
@@ -729,7 +1081,8 @@ return;
 
 try{
 
-const d=await api("daily_checkin");
+const d=
+await api("daily_checkin");
 
 state.user=d.user;
 
@@ -751,6 +1104,7 @@ e.message
 }
 
 }
+
 
 async function spin(){
 
@@ -764,7 +1118,8 @@ return;
 
 try{
 
-const d=await api("spin");
+const d=
+await api("spin");
 
 state.user=d.user;
 
@@ -787,13 +1142,18 @@ e.message
 
 }
 
+
 async function submitActivation(){
 
 const method=
-document.getElementById("activationMethod").value;
+document.getElementById(
+"activationMethod"
+).value;
 
 const transaction_id=
-document.getElementById("activationTxn").value.trim();
+document.getElementById(
+"activationTxn"
+).value.trim();
 
 if(!transaction_id){
 
@@ -808,7 +1168,8 @@ return;
 
 try{
 
-const d=await api(
+const d=
+await api(
 "activate",
 {
 method,
@@ -822,7 +1183,9 @@ d.message||"Request submitted",
 true
 );
 
-document.getElementById("activationTxn").value="";
+document.getElementById(
+"activationTxn"
+).value="";
 
 }catch(e){
 
@@ -835,6 +1198,7 @@ e.message
 
 }
 
+
 async function submitWithdraw(){
 
 if(!state.user?.is_activated){
@@ -846,13 +1210,21 @@ return;
 }
 
 const method=
-document.getElementById("withdrawMethod").value;
+document.getElementById(
+"withdrawMethod"
+).value;
 
 const phone=
-document.getElementById("withdrawPhone").value.trim();
+document.getElementById(
+"withdrawPhone"
+).value.trim();
 
 const amount=
-Number(document.getElementById("withdrawAmount").value);
+Number(
+document.getElementById(
+"withdrawAmount"
+).value
+);
 
 if(!/^01[3-9]\d{8}$/.test(phone)){
 
@@ -865,7 +1237,11 @@ return;
 
 }
 
-if(!Number.isFinite(amount)||amount<100||amount>5000){
+if(
+!Number.isFinite(amount)||
+amount<100||
+amount>5000
+){
 
 setStatus(
 "withdrawStatus",
@@ -876,7 +1252,10 @@ return;
 
 }
 
-if(amount>Number(state.user.balance||0)){
+if(
+amount>
+Number(state.user.balance||0)
+){
 
 setStatus(
 "withdrawStatus",
@@ -889,7 +1268,8 @@ return;
 
 try{
 
-const d=await api(
+const d=
+await api(
 "withdraw",
 {
 method,
@@ -904,9 +1284,13 @@ d.message||"Request submitted",
 true
 );
 
-document.getElementById("withdrawPhone").value="";
+document.getElementById(
+"withdrawPhone"
+).value="";
 
-document.getElementById("withdrawAmount").value="";
+document.getElementById(
+"withdrawAmount"
+).value="";
 
 loadWithdrawalHistory();
 
@@ -920,6 +1304,7 @@ e.message
 }
 
 }
+
 
 async function copyReferral(){
 
@@ -947,6 +1332,7 @@ setStatus(
 
 }
 
+
 function shareReferral(){
 
 const code=
@@ -958,20 +1344,31 @@ const bot=
 const url=
 `https://t.me/share/url?url=${encodeURIComponent(bot)}&text=${encodeURIComponent("CashBD-তে join করুন। Referral Code: "+code)}`;
 
-if(tg&&tg.openTelegramLink)
+if(
+tg&&
+tg.openTelegramLink
+){
 
 tg.openTelegramLink(url);
 
-else
+}else{
 
-window.open(url,"_blank");
+window.open(
+url,
+"_blank"
+);
 
 }
+
+}
+
 
 async function loadLeaderboard(){
 
 const box=
-document.getElementById("leaderboardList");
+document.getElementById(
+"leaderboardList"
+);
 
 box.innerHTML=
 '<div class="empty">Loading…</div>';
@@ -985,33 +1382,37 @@ const rows=
 d.leaderboard||[];
 
 box.innerHTML=
-
 rows.length
-
 ?
+rows.map(
+(u,i)=>
+`
+<div class="rank">
 
-rows.map((u,i)=>
+<div class="pos">
+#${i+1}
+</div>
 
-`<div class="rank">
-
-<div class="pos">#${i+1}</div>
-
-<div class="avatar">👤</div>
+<div class="avatar">
+👤
+</div>
 
 <div class="rankname">
-${esc(u.username?"@"+u.username:(u.full_name||"User"))}
+${esc(
+u.username
+?"@"+u.username
+:(u.full_name||"User")
+)}
 </div>
 
 <div class="money">
 ${money(u.balance)}
 </div>
 
-</div>`
-
+</div>
+`
 ).join("")
-
 :
-
 '<div class="empty">এখনো কোনো activated user নেই।</div>';
 
 }catch(e){
@@ -1023,10 +1424,13 @@ box.innerHTML=
 
 }
 
+
 async function loadHistory(){
 
 const box=
-document.getElementById("historyList");
+document.getElementById(
+"historyList"
+);
 
 box.innerHTML=
 '<div class="empty">Loading…</div>';
@@ -1040,18 +1444,18 @@ const rows=
 d.history||[];
 
 box.innerHTML=
-
 rows.length
-
 ?
-
-rows.map(x=>
-
-`<div class="item">
+rows.map(
+x=>
+`
+<div class="item">
 
 <div class="itemtop">
 
-<b>${esc(x.description||x.type)}</b>
+<b>
+${esc(x.description||x.type)}
+</b>
 
 <span class="money">
 ${Number(x.amount)>=0?"+":""}${money(x.amount)}
@@ -1060,15 +1464,17 @@ ${Number(x.amount)>=0?"+":""}${money(x.amount)}
 </div>
 
 <div class="muted small">
-${esc(new Date(x.created_at).toLocaleString("en-GB"))}
+${esc(
+new Date(
+x.created_at
+).toLocaleString("en-GB")
+)}
 </div>
 
-</div>`
-
+</div>
+`
 ).join("")
-
 :
-
 '<div class="empty">কোনো transaction নেই।</div>';
 
 }catch(e){
@@ -1080,10 +1486,13 @@ box.innerHTML=
 
 }
 
+
 async function loadReferralHistory(){
 
 const box=
-document.getElementById("referralHistory");
+document.getElementById(
+"referralHistory"
+);
 
 box.innerHTML=
 '<div class="empty">Loading…</div>';
@@ -1097,36 +1506,42 @@ const rows=
 d.referrals||[];
 
 box.innerHTML=
-
 rows.length
-
 ?
-
-rows.map(x=>
-
-`<div class="item">
+rows.map(
+x=>
+`
+<div class="item">
 
 <div class="itemtop">
 
 <b>Referral</b>
 
 <span class="money">
-${x.status==="successful"?"+৳30.00":"৳0.00"}
+${
+x.status==="successful"
+?"+৳30.00"
+:"৳0.00"
+}
 </span>
 
 </div>
 
 <div class="muted small">
-Status: ${esc(x.status||"pending")} •
-${esc(new Date(x.created_at).toLocaleString("en-GB"))}
+Status:
+${esc(x.status||"pending")}
+•
+${esc(
+new Date(
+x.created_at
+).toLocaleString("en-GB")
+)}
 </div>
 
-</div>`
-
+</div>
+`
 ).join("")
-
 :
-
 '<div class="empty">এখনো referral history নেই।</div>';
 
 }catch(e){
@@ -1138,10 +1553,13 @@ box.innerHTML=
 
 }
 
+
 async function loadWithdrawalHistory(){
 
 const box=
-document.getElementById("withdrawalHistory");
+document.getElementById(
+"withdrawalHistory"
+);
 
 if(!box)return;
 
@@ -1157,19 +1575,18 @@ const rows=
 d.withdrawals||[];
 
 box.innerHTML=
-
 rows.length
-
 ?
-
-rows.map(x=>
-
-`<div class="item">
+rows.map(
+x=>
+`
+<div class="item">
 
 <div class="itemtop">
 
 <b>
-${esc(x.method||"")} •
+${esc(x.method||"")}
+•
 ${esc(x.phone_number||"")}
 </b>
 
@@ -1180,16 +1597,20 @@ ${esc(x.phone_number||"")}
 </div>
 
 <div class="muted small">
-Status: ${esc(x.status||"pending")} •
-${esc(new Date(x.created_at).toLocaleString("en-GB"))}
+Status:
+${esc(x.status||"pending")}
+•
+${esc(
+new Date(
+x.created_at
+).toLocaleString("en-GB")
+)}
 </div>
 
-</div>`
-
+</div>
+`
 ).join("")
-
 :
-
 '<div class="empty">কোনো withdrawal history নেই।</div>';
 
 }catch(e){
@@ -1201,89 +1622,98 @@ box.innerHTML=
 
 }
 
+
 function renderProfile(){
 
 const u=state.user;
 
 if(!u)return;
 
-document.getElementById("profileInfo").innerHTML=
-
-`<div class="item">
-
+document.getElementById(
+"profileInfo"
+).innerHTML=
+`
+<div class="item">
 <b>Name</b>
-
 <div class="muted">
 ${esc(u.full_name||"-")}
 </div>
-
 </div>
 
 <div class="item">
-
 <b>Username</b>
-
 <div class="muted">
-${esc(u.username?"@"+u.username:"-")}
+${esc(
+u.username
+?"@"+u.username
+:"-"
+)}
 </div>
-
 </div>
 
 <div class="item">
-
 <b>Telegram ID</b>
-
 <div class="muted">
 ${esc(u.telegram_id)}
 </div>
-
 </div>
 
 <div class="item">
-
 <b>Referral Code</b>
-
 <div class="muted">
 ${esc(u.referral_code)}
 </div>
-
 </div>
 
 <div class="item">
-
 <b>Status</b>
-
 <div class="muted">
-${u.is_activated?"Activated":"Not Activated"}
+${u.is_activated
+?"Activated"
+:"Not Activated"}
 </div>
-
-</div>`;
+</div>
+`;
 
 }
+
 
 function openSupport(){
 
 const u=
 "https://t.me/CashBD_ManiBot";
 
-if(tg&&tg.openTelegramLink)
+if(
+tg&&
+tg.openTelegramLink
+){
 
 tg.openTelegramLink(u);
 
-else
+}else{
 
-window.open(u,"_blank");
+window.open(
+u,
+"_blank"
+);
 
 }
+
+}
+
 
 (async function(){
 
 if(!tg||!initData){
 
-document.getElementById("accountBadge").textContent=
+document.getElementById(
+"accountBadge"
+).textContent=
 "Telegram Only";
 
-document.getElementById("userName").textContent=
+document.getElementById(
+"userName"
+).textContent=
 "Telegram Mini App-এর ভিতর খুলুন";
 
 return;
